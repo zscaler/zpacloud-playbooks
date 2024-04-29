@@ -1,0 +1,60 @@
+---
+# zpa_application_segment_browser_access_facts.yml - Create/Update/Delete an Application Segment.
+#
+# Description
+# ===========
+#
+# Quick examples of how to use the 'zpa_application_segment_browser_access_facts' module to create an Application Segment in the ZPA Cloud.
+#
+# This playbook requires proper API credentials to be passed statically or via environment variables connection
+# to the ZPA Cloud 'client_id', 'client_secret', customer_id and 'cloud'. These may be defined as host variables
+# (see `host_vars/zpa_cloud.yml` for an example) or extra vars.
+#
+# Modules Used
+# ============
+#
+# zpa_application_segment_browser_access_facts - https://zscaler.github.io/zpacloud-ansible/modules/zpa_browser_access_facts_module.html
+#
+# Usage
+# =====
+#
+#  $ ansible-playbook zpa_application_segment_browser_access_facts.yml
+
+- name: Gather Details of Browser Access Application Segments
+  hosts: localhost
+  connection: local
+
+  vars:
+    zpa_cloud:
+      client_id: "{{ client_id }}"
+      client_secret: "{{ client_secret | default(omit) }}"
+      customer_id: "{{ customer_id | default(omit) }}"
+      cloud: "{{ cloud | default(omit) }}"
+
+  tasks:
+    - name: Retrieve All Browser Access Application Segments
+      zscaler.zpacloud.zpa_application_segment_browser_access_facts:
+      register: result
+
+    - name: All BA App Segment Details
+      ansible.builtin.debug:
+        msg: "{{ result }}"
+
+    - name: Gather Specific Browser Access Application Segment By Name
+      zscaler.zpacloud.zpa_application_segment_browser_access_facts:
+        name: BA_App_Segment_Name
+      register: ba01_result_name
+
+    - name: BA App Segment Details By Name
+      ansible.builtin.debug:
+        msg: "{{ ba01_result_name }}"
+
+    # Gather Specific Browser Access Application Segment By ID
+    - name: CRM_Example By ID
+      zscaler.zpacloud.zpa_application_segment_browser_access_facts:
+        id: "12345678910"
+      register: ba01_result_id
+
+    - name: BA App Segment Details By ID
+      ansible.builtin.debug:
+        msg: "{{ ba01_result_id }}"

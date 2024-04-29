@@ -1,0 +1,64 @@
+---
+# zpa_application_server_facts.yml - Get details (ID and/or Name) of a Application Server.
+#
+# Description
+# ===========
+#
+# Quick examples of how to use the 'zpa_application_server_facts' module to retrieve  details of an Application Server in the ZPA Cloud.
+#
+# This playbook requires proper API credentials to be passed statically or via environment variables connection
+# to the ZPA Cloud 'client_id', 'client_secret', customer_id and 'cloud'. These may be defined as host variables
+# (see `host_vars/zpa_cloud.yml` for an example) or extra vars.
+#
+# Modules Used
+# ============
+#
+# zpa_application_server_facts - https://zscaler.github.io/zpacloud-ansible/modules/zpa_application_server_facts_module.html
+#
+# Usage
+# =====
+#
+#  $ ansible-playbook zpa_application_server_facts.yml
+
+- name: Gather Details of Application Servers
+  hosts: localhost
+  connection: local
+
+  vars:
+    zpa_cloud:
+      client_id: "{{ client_id }}"
+      client_secret: "{{ client_secret | default(omit) }}"
+      customer_id: "{{ customer_id | default(omit) }}"
+      cloud: "{{ cloud | default(omit) }}"
+
+  tasks:
+    # Gather All Application Servers
+    - name: Gather Information Details of All Application Servers
+      zscaler.zpacloud.zpa_application_server_facts:
+        provider: "{{ zpa_cloud }}"
+      register: all_app_servers
+
+    - name: All Application Servers Details
+      ansible.builtin.debug:
+        msg: "{{ all_app_servers }}"
+
+    - name: Gather Information Details of an Application Server by Name
+      zscaler.zpacloud.zpa_application_server_facts:
+        provider: "{{ zpa_cloud }}"
+        name: server1.acme.com
+      register: app_server_name
+
+    - name: App Segment Details By Name
+      ansible.builtin.debug:
+        msg: "{{ app_server_name }}"
+
+    # Gather Application Server by ID
+    - name: Gather Information Details of an Application Server by ID
+      zscaler.zpacloud.zpa_application_server_facts:
+        provider: "{{ zpa_cloud }}"
+        id: "216196257331291921"
+      register: app_server_id
+
+    - name: App Segment Details By ID
+      ansible.builtin.debug:
+        msg: "{{ app_server_id }}"

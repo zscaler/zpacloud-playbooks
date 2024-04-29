@@ -1,0 +1,63 @@
+---
+# zpa_ba_certificate_facts.yml - Get details (ID and/or Name) of a browser certificate resource.
+#
+# Description
+# ===========
+#
+# Quick example of how to use the 'zpa_ba_certificate_facts' module to retrieve a Browser Certificate details from the ZPA Cloud.
+#
+# This playbook requires proper API credentials to be passed statically or via environment variables connection
+# to the ZPA Cloud 'client_id', 'client_secret', customer_id and 'cloud'. These may be defined as host variables
+# (see `host_vars/zpa_cloud.yml` for an example) or extra vars.
+#
+# Modules Used
+# ============
+#
+# zpa_ba_certificate_facts - https://zscaler.github.io/zpacloud-ansible/modules/zpa_ba_certificate_facts_module.html
+#
+# Usage
+# =====
+#
+#  $ ansible-playbook zpa_ba_certificate_facts.yml
+
+- name: Gather Details of Browser Access Certificate
+  hosts: localhost
+  connection: local
+
+  vars:
+    zpa_cloud:
+      client_id: "{{ client_id }}"
+      client_secret: "{{ client_secret | default(omit) }}"
+      customer_id: "{{ customer_id | default(omit) }}"
+      cloud: "{{ cloud | default(omit) }}"
+
+  tasks:
+    # Gather All Browser Certificates
+    - name: Gather Details of All Browser Certificates
+      zscaler.zpacloud.zpa_ba_certificate_facts:
+        provider: "{{ zpa_cloud }}"
+      register: certificates
+
+    - name: All Browser Certificates
+      ansible.builtin.debug:
+        msg: "{{ certificates }}"
+
+    - name: Gather Details of a Specific Browser Certificates by Name
+      zscaler.zpacloud.zpa_ba_certificate_facts:
+        provider: "{{ zpa_cloud }}"
+        name: server1.example.com
+      register: certificate_name
+
+    - name: Certificates by Name
+      ansible.builtin.debug:
+        msg: "{{ certificate_name }}"
+
+    - name: Gather Details of a Specific Browser Certificates by ID
+      zscaler.zpacloud.zpa_ba_certificate_facts:
+        provider: "{{ zpa_cloud }}"
+        id: "216196257331282583"
+      register: certificate_id
+
+    - name: Certificates by ID
+      ansible.builtin.debug:
+        msg: "{{ certificate_id }}"

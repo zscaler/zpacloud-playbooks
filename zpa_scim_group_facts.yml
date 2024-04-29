@@ -1,0 +1,68 @@
+---
+# zpa_scim_group_facts.yml - Get details (ID and/or Name) of a SCIM Group resource.
+#
+# Description
+# ===========
+#
+# Quick example of how to use the 'zpa_scim_group_facts' module to retrieve a SCIM Group details
+# from the ZPA Cloud.
+#
+# This playbook requires proper API credentials to be passed statically or via environment variables connection
+# to the ZPA Cloud 'client_id', 'client_secret', customer_id and 'cloud'. These may be defined as host variables
+# (see `host_vars/zpa_cloud.yml` for an example) or extra vars.
+#
+# Important: The IDP Name attribute is mandatory
+#
+# Modules Used
+# ============
+#
+# zpa_scim_group_facts - https://zscaler.github.io/zpacloud-ansible/modules/zpa_scim_group_facts_module.html
+#
+# Usage
+# =====
+#
+#  $ ansible-playbook zpa_scim_group_facts.yml
+
+- name: Gather SCIM Group Details
+  hosts: localhost
+  connection: local
+
+  vars:
+    zpa_cloud:
+      client_id: "{{ client_id }}"
+      client_secret: "{{ client_secret | default(omit) }}"
+      customer_id: "{{ customer_id | default(omit) }}"
+      cloud: "{{ cloud | default(omit) }}"
+
+  tasks:
+    # Gather all SCIM Group Info
+    - name: Gather Details of All SCIM Groups
+      zscaler.zpacloud.zpa_scim_group_facts:
+        idp_name: IdP_Name
+      register: scim_groups
+
+    - name: All SCIM Groups
+      ansible.builtin.debug:
+        msg: "{{ scim_groups }}"
+
+    # Gather Specific SCIM Group Info By Name
+    - name: Gather Details of a Specific SCIM Group by Name
+      zscaler.zpacloud.zpa_scim_group_facts:
+        idp_name: IdP_Name
+        name: Engineering
+      register: scim_group_name
+
+    - name: SCIM Group By Name
+      ansible.builtin.debug:
+        msg: "{{ scim_group_name }}"
+
+    # Gather Specific SCIM Group Info By ID
+    - name: Gather Details of a Specific SCIM Group by ID
+      zscaler.zpacloud.zpa_scim_group_facts:
+        idp_name: IdP_Name
+        id: "293480"
+      register: scim_group_id
+
+    - name: SCIM Group By ID
+      ansible.builtin.debug:
+        msg: "{{ scim_group_id }}"

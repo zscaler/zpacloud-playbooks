@@ -1,0 +1,61 @@
+---
+# zpa_app_connector_groups_facts.yml - Get details (ID and/or Name) of a App Connector Group.
+#
+# Description
+# ===========
+#
+# Quick examples of how to use the 'zpa_app_connector_groups_facts' module to retrieve  details of an App Connector Group in the ZPA Cloud.
+#
+# This playbook requires proper API credentials to be passed statically or via environment variables connection
+# to the ZPA Cloud 'client_id', 'client_secret', customer_id and 'cloud'. These may be defined as host variables
+# (see `host_vars/zpa_cloud.yml` for an example) or extra vars.
+#
+# Modules Used
+# ============
+#
+# zpa_app_connector_groups_facts - https://zscaler.github.io/zpacloud-ansible/modules/zpa_app_connector_group_facts_module.html
+#
+# Usage
+# =====
+#
+#  $ ansible-playbook zpa_app_connector_groups_facts.yml
+
+- name: Gather Details of Connector Groups
+  hosts: localhost
+  connection: local
+
+  vars:
+    zpa_cloud:
+      client_id: "{{ client_id }}"
+      client_secret: "{{ client_secret | default(omit) }}"
+      customer_id: "{{ customer_id | default(omit) }}"
+      cloud: "{{ cloud | default(omit) }}"
+
+  tasks:
+    - name: Gather Details of all App Connector Groups
+      zscaler.zpacloud.zpa_app_connector_group_facts:
+        provider: "{{ zpa_cloud }}"
+
+    - name: All App Connector Groups
+      ansible.builtin.debug:
+        msg: "{{ all_app_connectors }}"
+
+    - name: Gather Details of a Specific App Connector Groups by Name
+      zscaler.zpacloud.zpa_app_connector_group_facts:
+        provider: "{{ zpa_cloud }}"
+        name: Example App Connector Group
+      register: app_connector_name
+
+    - name: App Connector Groups by Name
+      ansible.builtin.debug:
+        msg: "{{ app_connector_name }}"
+
+    - name: Gather Details of a Specific App Connector Groups by ID
+      zscaler.zpacloud.zpa_app_connector_group_facts:
+        provider: "{{ zpa_cloud }}"
+        id: "216196257331292046"
+      register: app_connector_id
+
+    - name: App Connector Groups by ID
+      ansible.builtin.debug:
+        msg: "{{ app_connector_id }}"

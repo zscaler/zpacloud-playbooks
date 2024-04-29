@@ -1,0 +1,63 @@
+---
+# zpa_server_group_facts.yml - Get details (ID and/or Name) of a server group.
+#
+# Description
+# ===========
+#
+# Quick example of how to use the 'zpa_server_group_facts' module to retrieve details of a Server Group
+# in the ZPA Cloud.
+#
+# This playbook requires proper API credentials to be passed statically or via environment variables connection
+# to the ZPA Cloud 'client_id', 'client_secret', customer_id and 'cloud'. These may be defined as host variables
+# (see `host_vars/zpa_cloud.yml` for an example) or extra vars.
+#
+# Modules Used
+# ============
+#
+# zpa_server_group_facts - https://zscaler.github.io/zpacloud-ansible/modules/zpa_server_group_facts_module.html
+#
+# Usage
+# =====
+#
+#  $ ansible-playbook zpa_server_group_facts.yml
+
+- name: Gather Details of All Server Groups
+  hosts: localhost
+  connection: local
+
+  vars:
+    zpa_cloud:
+      client_id: "{{ client_id }}"
+      client_secret: "{{ client_secret | default(omit) }}"
+      customer_id: "{{ customer_id | default(omit) }}"
+      cloud: "{{ cloud | default(omit) }}"
+
+  tasks:
+    - name: Gather Details of All Server Groups
+      zscaler.zpacloud.zpa_server_group_facts:
+        provider: "{{ zpa_cloud }}"
+      register: server_groups
+
+    - name: All Server Groups
+      ansible.builtin.debug:
+        msg: "{{ server_groups }}"
+
+    - name: Gather Details of All Server Groups by Name
+      zscaler.zpacloud.zpa_server_group_facts:
+        provider: "{{ zpa_cloud }}"
+        name: Example
+      register: server_group_name
+
+    - name: Server Groups by Name
+      ansible.builtin.debug:
+        msg: "{{ server_group_name }}"
+
+    - name: Gather Details of All Server Groups by ID
+      zscaler.zpacloud.zpa_server_group_facts:
+        provider: "{{ zpa_cloud }}"
+        id: "216196257331291969"
+      register: server_group_id
+
+    - name: Server Groups by ID
+      ansible.builtin.debug:
+        msg: "{{ server_group_id }}"

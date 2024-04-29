@@ -1,0 +1,102 @@
+---
+# zpa_application_segment.yml - Create/Update/Delete an Application Segment.
+#
+# Description
+# ===========
+#
+# Quick examples of how to use the 'zpa_application_segment' module to create an Application Segment in the ZPA Cloud.
+#
+# This playbook requires proper API credentials to be passed statically or via environment variables connection
+# to the ZPA Cloud 'client_id', 'client_secret', customer_id and 'cloud'. These may be defined as host variables
+# (see `host_vars/zpa_cloud.yml` for an example) or extra vars.
+#
+# Modules Used
+# ============
+#
+# zpa_application_segment - https://zscaler.github.io/zpacloud-ansible/modules/zpa_application_segment_module.html
+#
+# Usage
+# =====
+#
+#  $ ansible-playbook zpa_application_segment.yml
+
+- name: Creating Application Segments
+  hosts: localhost
+  connection: local
+
+  vars:
+    zpa_cloud:
+      client_id: "{{ client_id }}"
+      client_secret: "{{ client_secret | default(omit) }}"
+      customer_id: "{{ customer_id | default(omit) }}"
+      cloud: "{{ cloud | default(omit) }}"
+
+  tasks:
+    - name: Create App Connector Group
+      zscaler.zpacloud.zpa_app_connector_groups:
+        provider: "{{ zpa_cloud }}"
+        name: App Connector Group One
+        description: App Connector Group One
+        enabled: true
+        city_country: San Jose, US
+        country_code: US
+        latitude: "37.3382082"
+        longitude: "-121.8863286"
+        location: San Jose, CA, USA
+        upgrade_day: SUNDAY
+        upgrade_time_in_secs: "66600"
+        override_version_profile: true
+        version_profile_id: "0"
+      register: app_connector_group_id
+
+    - name: Create Server Group
+      zscaler.zpacloud.zpa_server_group:
+        provider: "{{ zpa_cloud }}"
+        name: Server Group One
+        description: Server Group One
+        enabled: true
+        dynamic_discovery: true
+        app_connector_group_ids:
+          - "{{ app_connector_group_id.data.id }}"
+      register: server_group_id
+
+    - name: Create Segment Group
+      zscaler.zpacloud.zpa_segment_group:
+        provider: "{{ zpa_cloud }}"
+        name: Segment Group One
+        description: Segment Group One
+      register: segment_group_id
+
+    # Create an Application Segment
+    - name: Create an Application Segment
+      zscaler.zpacloud.zpa_application_segment:
+        provider: "{{ zpa_cloud }}"
+        name: "{{ item.name }}"
+        description: "{{ item.description }}"
+        enabled: "{{ item.enabled }}"
+        health_reporting: "{{ item.health_reporting }}"
+        bypass_type: "{{ item.bypass_type }}"
+        tcp_keep_alive: "{{ item.tcp_keep_alive }}"
+        is_cname_enabled: "{{ item.is_cname_enabled }}"
+        tcp_port_range: "{{ item.tcp_port_range }}"
+        domain_names: "{{ item.domain_names | default([]) }}"
+        segment_group_id: "{{ segment_group_id.data.id }}"
+        server_group_ids:
+          - "{{ server_group_id.data.id }}"
+      with_items:
+        - name: app01
+          description: application one
+          domain_names: [app01.example.com]
+          enabled: true
+          health_reporting: ON_ACCESS
+          tcp_keep_alive: true
+          is_cname_enabled: true
+          tcp_port_range:
+            - from: "80"
+              to: "80"
+        - name: app02
+          description: application two
+          domain_names: [app02.example.com]
+          tcp_port_range:
+            - from: "443"
+              to: "443"

@@ -1,0 +1,80 @@
+---
+# zpa_policy_forwarding_rule.yml - Create/Update/Delete a Policy Forwarding Rule.
+#
+# Description
+# ===========
+#
+# Quick example of how to use the 'zpa_policy_access_forwarding_rule' module to create a Policy Forwarding Rule in the ZPA Cloud.
+#
+# This playbook requires proper API credentials to be passed statically or via environment variables connection
+# to the ZPA Cloud 'client_id', 'client_secret', customer_id and 'cloud'. These may be defined as host variables
+# (see `host_vars/zpa_cloud.yml` for an example) or extra vars.
+#
+# Modules Used
+# ============
+#
+# zpa_policy_access_forwarding_rule - https://zscaler.github.io/zpacloud-ansible/modules/zpa_policy_forwarding_rule_module.html
+#
+# Usage
+# =====
+#
+#  $ ansible-playbook zpa_policy_access_forwarding_rule.yml
+
+- name: Create Policy Access Forwarding Rules
+  hosts: localhost
+  connection: local
+
+  vars:
+    zpa_cloud:
+      client_id: "{{ client_id }}"
+      client_secret: "{{ client_secret | default(omit) }}"
+      customer_id: "{{ customer_id | default(omit) }}"
+      cloud: "{{ cloud | default(omit) }}"
+
+  tasks:
+    # Gather Applicaton Segment Info
+    - name: Application Segment
+      zscaler.zpacloud.zpa_application_segment_facts:
+        provider: "{{ zpa_cloud }}"
+        name: Example
+      register: application_segment
+
+    # Get IdP Controller ID Information
+    - name: Get information IdP Controller ID
+      zscaler.zpacloud.zpa_idp_controller_facts:
+        provider: "{{ zpa_cloud }}"
+        name: IdP_Name
+      register: user_idp
+
+    - name: All IDPs
+      ansible.builtin.debug:
+        msg: "{{ user_idp }}"
+
+    - name: Get Contractors SCIM Group ID
+      zscaler.zpacloud.zpa_scim_group_facts:
+        provider: "{{ zpa_cloud }}"
+        name: Contractors
+        idp_name: IdP_Name
+      register: contractors_group
+
+    # Create Policy Forwarding Rules
+    - name: Forwarding Policy - Example
+      zscaler.zpacloud.zpa_policy_access_forwarding_rule:
+        provider: "{{ zpa_cloud }}"
+        name: Example
+        description: Example
+        action: BYPASS
+        rule_order: "1"
+        operator: AND
+        conditions:
+          - operator: OR
+            operands:
+              - object_type: APP
+                lhs: id
+                rhs: "{{ application_segment.data[0].id }}"
+          - operator: OR
+            operands:
+              - object_type: SCIM_GROUP
+                idp_id: "{{ user_idp.data[0].id }}"
+                lhs: "{{ user_idp.data[0].id }}"
+                rhs: "{{ contractors_group.data[0].id }}"

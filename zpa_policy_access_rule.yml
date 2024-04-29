@@ -1,0 +1,73 @@
+---
+# zpa_policy_access_rule.yml - Create/Update/Delete a Policy Access Rule.
+#
+# Description
+# ===========
+#
+# Quick example of how to use the 'zpa_policy_access_rule' module to create a Policy Access Rule in the ZPA Cloud.
+#
+# This playbook requires proper API credentials to be passed statically or via environment variables connection
+# to the ZPA Cloud 'client_id', 'client_secret', customer_id and 'cloud'. These may be defined as host variables
+# (see `host_vars/zpa_cloud.yml` for an example) or extra vars.
+#
+# Modules Used
+# ============
+#
+# zpa_policy_access_rule - https://zscaler.github.io/zpacloud-ansible/modules/zpa_policy_access_rule_module.html
+#
+# Usage
+# =====
+#
+#  $ ansible-playbook zpa_policy_access_rule.yml
+
+- name: Create Policy Access Rule
+  hosts: localhost
+  connection: local
+
+  vars:
+    zpa_cloud:
+      client_id: "{{ client_id }}"
+      client_secret: "{{ client_secret | default(omit) }}"
+      customer_id: "{{ customer_id | default(omit) }}"
+      cloud: "{{ cloud | default(omit) }}"
+
+  tasks:
+    - name: Application Segment - CRM_Example
+      zscaler.zpacloud.zpa_application_segment_facts:
+        provider: "{{ zpa_cloud }}"
+        name: app01
+      register: application_segment
+
+    # Get IdP Controller ID Information
+    - name: Get information IdP Controller ID
+      zscaler.zpacloud.zpa_idp_controller_facts:
+        provider: "{{ zpa_cloud }}"
+        name: IdP_Name
+      register: idp_name
+
+    - name: Get Contractors SCIM Group ID
+      zscaler.zpacloud.zpa_scim_group_facts:
+        provider: "{{ zpa_cloud }}"
+        name: Contractors
+        idp_name: IdP_Name
+      register: contractors_group
+
+    - name: Create Policy Access Rule
+      zscaler.zpacloud.zpa_policy_access_rule:
+        provider: "{{ zpa_cloud }}"
+        name: Rule 1
+        description: Rule 1
+        action: ALLOW
+        rule_order: 1
+        operator: AND
+        conditions:
+          - operator: OR
+            operands:
+              - object_type: APP
+                lhs: id
+                rhs: "{{ application_segment.data[0].id }}"
+          - operator: OR
+            operands:
+              - object_type: SCIM_GROUP
+                lhs: "{{ idp_name.data[0].id }}"
+                rhs: "{{ contractors_group.data[0].id }}"

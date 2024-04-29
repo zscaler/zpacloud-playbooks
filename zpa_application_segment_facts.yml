@@ -1,0 +1,62 @@
+---
+# zpa_application_segment_facts.yml - Get details (ID and/or Name) of a Application Segment.
+#
+# Description
+# ===========
+#
+# Quick examples of how to use the 'zpa_application_segment_facts' module to retrieve  details of an Application Segment in the ZPA Cloud.
+#
+# This playbook requires proper API credentials to be passed statically or via environment variables connection
+# to the ZPA Cloud 'client_id', 'client_secret', customer_id and 'cloud'. These may be defined as host variables
+# (see `host_vars/zpa_cloud.yml` for an example) or extra vars.
+#
+# Modules Used
+# ============
+#
+# zpa_application_segment_facts - https://zscaler.github.io/zpacloud-ansible/modules/zpa_application_segment_facts_module.html
+#
+# Usage
+# =====
+#
+#  $ ansible-playbook zpa_application_segment_facts.yml
+
+- name: Gather Details of Application Segments
+  hosts: localhost
+  connection: local
+
+  vars:
+    zpa_cloud:
+      client_id: "{{ client_id }}"
+      client_secret: "{{ client_secret | default(omit) }}"
+      customer_id: "{{ customer_id | default(omit) }}"
+      cloud: "{{ cloud | default(omit) }}"
+
+  tasks:
+    - name: Gather Details of All Application Segments
+      zscaler.zpacloud.zpa_application_segment_facts:
+        provider: "{{ zpa_cloud }}"
+      register: result
+
+    - name: All App Segment Details
+      ansible.builtin.debug:
+        msg: "{{ all_app_segments }}"
+
+    - name: Gather Details of a Specific Application Segments by Name
+      zscaler.zpacloud.zpa_application_segment_facts:
+        provider: "{{ zpa_cloud }}"
+        name: App_Segment_Name
+      register: result_name
+
+    - name: App Segment Details By Name
+      ansible.builtin.debug:
+        msg: "{{ result_name }}"
+
+    - name: Gather Details of a Specific Application Segments by ID
+      zscaler.zpacloud.zpa_application_segment_facts:
+        provider: "{{ zpa_cloud }}"
+        id: "12345678910"
+      register: result_id
+
+    - name: App Segment Details By ID
+      ansible.builtin.debug:
+        msg: "{{ app_segment_id }}"

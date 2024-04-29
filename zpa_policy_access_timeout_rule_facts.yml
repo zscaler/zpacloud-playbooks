@@ -1,0 +1,65 @@
+---
+# zpa_policy_timeout_rule_facts.yml - Create/Update/Delete a Policy Timeout Rule.
+#
+# Description
+# ===========
+#
+# Quick example of how to use the 'zpa_policy_timeout_rule_facts' module to create a Policy Timeout Rule in the ZPA Cloud.
+#
+# This playbook requires proper API credentials to be passed statically or via environment variables connection
+# to the ZPA Cloud 'client_id', 'client_secret', customer_id and 'cloud'. These may be defined as host variables
+# (see `host_vars/zpa_cloud.yml` for an example) or extra vars.
+#
+# Modules Used
+# ============
+#
+# zpa_policy_timeout_rule_facts - https://zscaler.github.io/zpacloud-ansible/modules/zpa_policy_timeout_rule_facts_module.html
+#
+# Usage
+# =====
+#
+#  $ ansible-playbook zpa_policy_timeout_rule_facts.yml
+
+- name: Gather Policy Access Timeout Rule Details
+  hosts: localhost
+  connection: local
+
+  vars:
+    zpa_cloud:
+      client_id: "{{ client_id }}"
+      client_secret: "{{ client_secret | default(omit) }}"
+      customer_id: "{{ customer_id | default(omit) }}"
+      cloud: "{{ cloud | default(omit) }}"
+
+  tasks:
+    # Gather All Timeout Policy Info
+    - name: Gather All Timeout Policy Rules
+      zscaler.zpacloud.zpa_policy_access_timeout_rule_facts:
+        provider: "{{ zpa_cloud }}"
+      register: timeout_rule
+
+    - name: All Timeout Policy Rules
+      ansible.builtin.debug:
+        msg: "{{ timeout_rule }}"
+
+    # Gather Specific Timeout Policy By Name
+    - name: Timeout Policy Rules By Name
+      zscaler.zpacloud.zpa_policy_access_timeout_rule_facts:
+        provider: "{{ zpa_cloud }}"
+        name: CRM_Example
+      register: timeout_rule_name
+
+    - name: Timeout Policy Rules By Name
+      ansible.builtin.debug:
+        msg: "{{ timeout_rule_name }}"
+
+    # Gather Specific Timeout Policy Info By ID
+    - name: Timeout Policy Rules By ID
+      zscaler.zpacloud.zpa_policy_access_timeout_rule_facts:
+        provider: "{{ zpa_cloud }}"
+        id: "216196257331282583"
+      register: timeout_rule_id
+
+    - name: Timeout Policy Rules By ID
+      ansible.builtin.debug:
+        msg: "{{ timeout_rule_id }}"

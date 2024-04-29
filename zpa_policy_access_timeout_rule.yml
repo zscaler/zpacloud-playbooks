@@ -1,0 +1,77 @@
+---
+# zpa_policy_access_timeout_rule.yml - Create/Update/Delete a Policy Timeout Rule.
+#
+# Description
+# ===========
+#
+# Quick example of how to use the 'zpa_policy_access_timeout_rule' module to create a Policy Timeout Rule in the ZPA Cloud.
+#
+# This playbook requires proper API credentials to be passed statically or via environment variables connection
+# to the ZPA Cloud 'client_id', 'client_secret', customer_id and 'cloud'. These may be defined as host variables
+# (see `host_vars/zpa_cloud.yml` for an example) or extra vars.
+#
+# Modules Used
+# ============
+#
+# zpa_policy_access_timeout_rule - https://zscaler.github.io/zpacloud-ansible/modules/zpa_policy_access_timeout_rule_module.html
+#
+# Usage
+# =====
+#
+#  $ ansible-playbook zpa_application_segment_facts.yml
+
+- name: Create Policy Access Timeout Rules
+  hosts: localhost
+  connection: local
+
+  vars:
+    zpa_cloud:
+      client_id: "{{ client_id }}"
+      client_secret: "{{ client_secret | default(omit) }}"
+      customer_id: "{{ customer_id | default(omit) }}"
+      cloud: "{{ cloud | default(omit) }}"
+
+  tasks:
+    # Gather Applicaton Segment Info
+    - name: Application Segment - Example
+      zscaler.zpacloud.zpa_application_segment_facts:
+        provider: "{{ zpa_cloud }}"
+        name: Example
+      register: application_segment
+
+    # Get IdP Controller ID Information
+    - name: Get information IdP Controller ID
+      zscaler.zpacloud.zpa_idp_controller_facts:
+        provider: "{{ zpa_cloud }}"
+        name: IdP_Name
+      register: idp_name
+
+    - name: Get Contractors SCIM Group ID
+      zscaler.zpacloud.zpa_scim_group_facts:
+        provider: "{{ zpa_cloud }}"
+        name: Contractors
+        idp_name: IdP_Name
+      register: contractors_group
+
+    # Create Policy Timeout Rules
+    - name: Timeout Policy - Example
+      zscaler.zpacloud.zpa_policy_access_timeout_rule:
+        provider: "{{ zpa_cloud }}"
+        name: Example
+        description: Example
+        action: RE_AUTH
+        reauth_idle_timeout: 10 days
+        reauth_timeout: 10 days
+        rule_order: "1"
+        operator: AND
+        conditions:
+          - operator: OR
+            operands:
+              - object_type: APP
+                lhs: id
+                rhs: "{{ application_segment.data[0].id }}"
+          - operator: OR
+            operands:
+              - object_type: SCIM_GROUP
+                lhs: "{{ idp_name.data[0].id }}"
+                rhs: "{{ idp_name.data[0].id }}"

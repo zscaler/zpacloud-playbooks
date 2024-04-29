@@ -1,0 +1,86 @@
+---
+# zpa_app_connector_groups.yml - Create/Update/Delete an App Connector Group.
+#
+# Description
+# ===========
+#
+# Quick examples of how to use the 'zpa_app_connector_groups' module to create an App Connector Group in the ZPA Cloud.
+#
+# This playbook requires proper API credentials to be passed statically or via environment variables connection
+# to the ZPA Cloud 'client_id', 'client_secret', customer_id and 'cloud'. These may be defined as host variables
+# (see `host_vars/zpa_cloud.yml` for an example) or extra vars.
+#
+# Modules Used
+# ============
+#
+# zpa_app_connector_groups - https://zscaler.github.io/zpacloud-ansible/modules/zpa_app_connector_group_module.html
+#
+# Usage
+# =====
+#
+#  $ ansible-playbook zpa_app_connector_groups.yml
+
+- name: Creating App Connector Groups
+  hosts: localhost
+  connection: local
+
+  vars:
+    zpa_cloud:
+      client_id: "{{ client_id }}"
+      client_secret: "{{ client_secret | default(omit) }}"
+      customer_id: "{{ customer_id | default(omit) }}"
+      cloud: "{{ cloud | default(omit) }}"
+
+  tasks:
+    - name: Create/Update/Delete App Connector Group
+      zscaler.zpacloud.zpa_app_connector_groups:
+        provider: "{{ zpa_cloud }}"
+        name: "{{ item.name }}"
+        description: "{{ item.description }}"
+        enabled: "{{ item.enabled }}"
+        city_country: "{{ item.city_country }}"
+        country_code: "{{ item.country_code }}"
+        latitude: "{{ item.latitude }}"
+        longitude: "{{ item.longitude }}"
+        location: "{{ item.location }}"
+        upgrade_day: "{{ item.upgrade_day }}"
+        override_version_profile: "{{ item.override_version_profile }}"
+        version_profile_id: "{{ item.version_profile_id }}"
+        dns_query_type: "{{ item.dns_query_type }}"
+      with_items:
+        - name: app_connector_group01
+          description: app_connector_group01
+          enabled: true
+          city_country: San Jose, US
+          country_code: US
+          latitude: "37.3382082"
+          longitude: "-121.8863286"
+          location: San Jose, CA, USA
+          upgrade_day: SUNDAY
+          dns_query_type: IPV4_IPV6
+          override_version_profile: true
+          version_profile_id: "0"
+        - name: app_connector_group02
+          description: app_connector_group02
+          enabled: true
+          city_country: San Francisco, US
+          country_code: US
+          latitude: "37.7749295"
+          longitude: "-122.4194155"
+          location: San Francisco, CA, USA
+          upgrade_day: SUNDAY
+          dns_query_type: IPV4_IPV6
+          override_version_profile: true
+          version_profile_id: "0"
+        - name: app_connector_group03
+          description: app_connector_group03
+          enabled: true
+          city_country: Toronto, CA
+          country_code: CA
+          latitude: "43.653226"
+          longitude: "-79.3831843"
+          location: Toronto, ON, Canada
+          upgrade_day: SUNDAY
+          dns_query_type: IPV4_IPV6
+          override_version_profile: true
+          version_profile_id: "0"

@@ -1,0 +1,62 @@
+---
+# zpa_posture_profile_facts.yml - Get details (ID and/or Name) of a Posture Profile resource.
+#
+# Description
+# ===========
+#
+# Quick example of how to use the 'zpa_posture_profile_facts' module to retrieve a Posture Profile details from the ZPA Cloud.
+#
+# This playbook requires proper API credentials to be passed statically or via environment variables connection
+# to the ZPA Cloud 'client_id', 'client_secret', customer_id and 'cloud'. These may be defined as host variables
+# (see `host_vars/zpa_cloud.yml` for an example) or extra vars.
+#
+# Modules Used
+# ============
+#
+# zpa_posture_profile_facts - https://zscaler.github.io/zpacloud-ansible/modules/zpa_posture_profile_facts_module.html
+#
+# Usage
+# =====
+#
+#  $ ansible-playbook zpa_posture_profile_facts.yml
+
+- name: Gather Posture Profile Details
+  hosts: localhost
+  connection: local
+
+  vars:
+    zpa_cloud:
+      client_id: "{{ client_id }}"
+      client_secret: "{{ client_secret | default(omit) }}"
+      customer_id: "{{ customer_id | default(omit) }}"
+      cloud: "{{ cloud | default(omit) }}"
+
+  tasks:
+    - name: Gather Details of All Posture Profiles
+      zscaler.zpacloud.zpa_posture_profile_facts:
+        provider: "{{ zpa_cloud }}"
+      register: posture_profiles
+
+    - name: All Posture Profiles
+      ansible.builtin.debug:
+        msg: "{{ posture_profiles }}"
+
+    - name: Gather Details of a Specific Posture Profile by Name
+      zscaler.zpacloud.zpa_posture_profile_facts:
+        provider: "{{ zpa_cloud }}"
+        name: CrowdStrike_ZPA_ZTA_40
+      register: posture_profile_name
+
+    - name: Posture Profile By Name
+      ansible.builtin.debug:
+        msg: "{{ posture_profile_name }}"
+
+    - name: Gather Details of a Specific Posture Profile by ID
+      zscaler.zpacloud.zpa_posture_profile_facts:
+        provider: "{{ zpa_cloud }}"
+        id: "216196257331282583"
+      register: posture_profile_id
+
+    - name: Posture Profile By ID
+      ansible.builtin.debug:
+        msg: "{{ posture_profile_id }}"

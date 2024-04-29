@@ -1,0 +1,62 @@
+---
+# zpa_policy_access_rule_facts.yml - Get details (ID and/or Name) of a Policy Access Rule resource.
+#
+# Description
+# ===========
+#
+# Quick example of how to use the 'zpa_policy_access_rule_facts' module to retrieve a Policy Access Rule details from the ZPA Cloud.
+#
+# This playbook requires proper API credentials to be passed statically or via environment variables connection
+# to the ZPA Cloud 'client_id', 'client_secret', customer_id and 'cloud'. These may be defined as host variables
+# (see `host_vars/zpa_cloud.yml` for an example) or extra vars.
+#
+# Modules Used
+# ============
+#
+# zpa_policy_access_rule_facts - https://zscaler.github.io/zpacloud-ansible/modules/zpa_policy_access_rule_facts_module.html
+#
+# Usage
+# =====
+#
+#  $ ansible-playbook zpa_policy_access_rule_facts.yml
+
+- name: Gather Policy Access Rule Details
+  hosts: localhost
+  connection: local
+
+  vars:
+    zpa_cloud:
+      client_id: "{{ client_id }}"
+      client_secret: "{{ client_secret | default(omit) }}"
+      customer_id: "{{ customer_id | default(omit) }}"
+      cloud: "{{ cloud | default(omit) }}"
+
+  tasks:
+    - name: Gather Details of All Policy Access Rules
+      zscaler.zpacloud.zpa_policy_access_rule_facts:
+        provider: "{{ zpa_cloud }}"
+      register: access_rules
+
+    - name: All Access Rules
+      ansible.builtin.debug:
+        msg: "{{ access_rules }}"
+
+    - name: Policy Access Rule By Name
+      zscaler.zpacloud.zpa_policy_access_rule_facts:
+        provider: "{{ zpa_cloud }}"
+        name: Rule 1
+      register: access_rule_name
+
+    - name: Access Rule By Name
+      ansible.builtin.debug:
+        msg: "{{ access_rule_name }}"
+
+    - name: Policy Access Rule By ID
+      zscaler.zpacloud.zpa_policy_access_rule_facts:
+        provider: "{{ zpa_cloud }}"
+        id: "216196257331282583"
+      register: access_rule_id
+
+    - name: Access Rule By ID
+      ansible.builtin.debug:
+        msg: "{{ access_rule_id }}"

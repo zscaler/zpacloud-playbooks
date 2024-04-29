@@ -1,0 +1,95 @@
+---
+# zpa_lss_config_controller.yml - Create/Update/Delete a LSS Config Controller.
+#
+# Description
+# ===========
+#
+# Quick example of how to use the 'zpa_lss_config_controller' module to create an LSS Config Controller in the ZPA Cloud.
+#
+# This playbook requires proper API credentials to be passed statically or via environment variables connection
+# to the ZPA Cloud 'client_id', 'client_secret', customer_id and 'cloud'. These may be defined as host variables
+# (see `host_vars/zpa_cloud.yml` for an example) or extra vars.
+#
+# LSS Config Requires One of the following Log Type Format.
+# The paramenter `log_type` take one of the following parameters:
+# * zpn_trans_log
+# * zpn_ast_auth_log
+# * zpn_auth_log
+# * zpn_ast_comprehensive_stats
+# * zpn_http_trans_log
+#
+# Modules Used
+# ============
+#
+# zpa_lss_config_controller - https://zscaler.github.io/zpacloud-ansible/modules/zpa_lss_config_controller_module.html
+#
+# Usage
+# =====
+#
+#  $ ansible-playbook zpa_lss_config_controller.yml
+
+- name: Create LSS Config Controller
+  hosts: localhost
+  connection: local
+
+  vars:
+    zpa_cloud:
+      client_id: "{{ client_id }}"
+      client_secret: "{{ client_secret | default(omit) }}"
+      customer_id: "{{ customer_id | default(omit) }}"
+      cloud: "{{ cloud | default(omit) }}"
+  tasks:
+    # Retrieve App Connector Group ID
+    - name: LSS App Connector Group
+      zscaler.zpacloud.zpa_app_connector_group_facts:
+        provider: "{{ zpa_cloud }}"
+        name: LSS App Connector Group
+      register: lss_app_connector
+
+    # Retrieve LSS Log Types Format
+    - name: Gather LSS Log types formats
+      zscaler.zpacloud.zpa_lss_config_log_types_formats_facts:
+        provider: "{{ zpa_cloud }}"
+        log_type: zpn_ast_auth_log
+      register: zpn_ast_auth_log
+
+    # Create LSS Configuration
+    - name: LSS Audit Logs
+      zscaler.zpacloud.zpa_lss_config_controller:
+        provider: "{{ zpa_cloud }}"
+        config:
+          name: LSS Audit Logs
+          description: LSS Audit Logs
+          enabled: true
+          lss_host: 192.168.1.1
+          lss_port: "11000"
+          format: "{{ zpn_ast_auth_log.data.json }}"
+          source_log_type: zpn_ast_auth_log
+        connector_groups:
+          - id: "{{ lss_app_connector.data[0].id }}"
+
+    # Retrieve LSS Log Types Format
+    - name: Gather LSS Log types formats
+      zscaler.zpacloud.zpa_lss_config_log_types_formats_facts:
+        provider: "{{ zpa_cloud }}"
+        log_type: zpn_trans_log
+      register: zpn_trans_log
+
+    # Create LSS Configuration
+    - name: LSS User Activity
+      zscaler.zpacloud.zpa_lss_config_controller:
+        provider: "{{ zpa_cloud }}"
+        config:
+          name: LSS User Activity
+          description: LSS User Activity
+          enabled: true
+          lss_host: 192.168.1.1
+          lss_port: "11001"
+          format: "{{ zpn_trans_log.data.json }}"
+          source_log_type: zpn_trans_log
+          filter:
+            - ZPN_STATUS_AUTH_FAILED
+            - ZPN_STATUS_DISCONNECTED
+            - ZPN_STATUS_AUTHENTICATED
+        connector_groups:
+          - id: "{{ lss_app_connector.data[0].id }}"

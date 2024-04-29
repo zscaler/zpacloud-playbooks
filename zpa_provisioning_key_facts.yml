@@ -1,0 +1,105 @@
+---
+# zpa_provisioning_key_facts.yml - Get details (ID and/or Name) of a Provisioning Key by association type (CONNECTOR_GRP or SERVICE_EDGE_GRP).
+#
+# Description
+# ===========
+#
+# Quick examples of how to use the 'zpa_provisioning_key_facts' module to retrieve  details of a Provisioning Key by association type in the ZPA Cloud.
+#
+# This playbook requires proper API credentials to be passed statically or via environment variables connection
+# to the ZPA Cloud 'client_id', 'client_secret', customer_id and 'cloud'. These may be defined as host variables
+# (see `host_vars/zpa_cloud.yml` for an example) or extra vars.
+#
+# Modules Used
+# ============
+#
+# zpa_provisioning_key_facts - https://zscaler.github.io/zpacloud-ansible/modules/zpa_provisioning_key_module.html
+#
+# Usage
+# =====
+#
+#  $ ansible-playbook zpa_provisioning_key_facts.yml
+
+# Gather Details of All CONNECTOR_GRP Provisioning Keys
+
+- name: Gather Connector Provisioning Key Details
+  hosts: localhost
+  connection: local
+
+  vars:
+    zpa_cloud:
+      client_id: "{{ client_id }}"
+      client_secret: "{{ client_secret | default(omit) }}"
+      customer_id: "{{ customer_id | default(omit) }}"
+      cloud: "{{ cloud | default(omit) }}"
+
+  tasks:
+    - name: Gather Details of All Connector Group Provisioning Keys
+      zscaler.zpacloud.zpa_provisioning_key_facts:
+        provider: "{{ zpa_cloud }}"
+        key_type: connector
+      register: all_connector_grp_keys
+
+    - name: All Connector Group Provisioning Keys
+      ansible.builtin.debug:
+        msg: "{{ all_connector_grp_keys }}"
+
+    - name: Gather Details of All Connector Group Provisioning Keys by Name
+      zscaler.zpacloud.zpa_provisioning_key_facts:
+        provider: "{{ zpa_cloud }}"
+        name: App Connector Group Key
+        key_type: connector
+      register: connector_grp_key_name
+
+    - name: Connector Group Key By Name
+      ansible.builtin.debug:
+        msg: "{{ connector_grp_key_name }}"
+
+    - name: Gather Details of All Connector Group Provisioning Keys by ID
+      zscaler.zpacloud.zpa_provisioning_key_facts:
+        provider: "{{ zpa_cloud }}"
+        id: "8691"
+        key_type: connector
+      register: connector_grp_key_id
+
+    - name: Connector Group Key By ID
+      ansible.builtin.debug:
+        msg: "{{ connector_grp_key_id }}"
+
+# Gather Details of All Service Edge Group Provisioning Keys
+- name: Gather Service Edge Provisioning Key Details
+  hosts: localhost
+  connection: local
+
+  tasks:
+    - name: Gather Details of All Service Edge Group Provisioning Keys
+      zscaler.zpacloud.zpa_provisioning_key_facts:
+        provider: "{{ zpa_cloud }}"
+        key_type: service_edge
+      register: all_edge_grp_key_name
+
+    - name: All Service Edge Group
+      ansible.builtin.debug:
+        msg: "{{ all_edge_grp_key_name }}"
+
+    - name: Gather Details of All Service Edge Group Provisioning Keys by Name
+      zscaler.zpacloud.zpa_provisioning_key_facts:
+        provider: "{{ zpa_cloud }}"
+        name: Example Service Edge Group
+        key_type: service_edge
+      register: edge_grp_key_name
+
+    - name: Service Edge Group Key By Name
+      ansible.builtin.debug:
+        msg: "{{ edge_grp_key_name }}"
+
+    - name: Gather Details of All Service Edge Group Provisioning Keys by ID
+      zscaler.zpacloud.zpa_provisioning_key_facts:
+        provider: "{{ zpa_cloud }}"
+        id: "8691"
+        key_type: service_edge
+      register: edge_grp_key_id
+
+    - name: Service Edge Group Key By ID
+      ansible.builtin.debug:
+        msg: "{{ edge_grp_key_id }}"

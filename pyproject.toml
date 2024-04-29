@@ -1,0 +1,23 @@
+[tool.poetry]
+name = "zpacloud-playbooks"
+version = "0.1.0"
+description = "Sample playbooks for the Zscaler Private Access Ansible modules"
+authors = ["Zscaler, Inc. <devrel@zscaler.com>"]
+license = "MIT"
+readme = "README.md"
+homepage = "https://github.com/zscaler/zpacloud-playbooks"
+repository = "https://github.com/zscaler/zpacloud-playbooks"
+documentation = "https://zscaler-sdk-python.readthedocs.io"
+keywords = ["zpacloud", "zpacloud-ansible", "zpa"]
+
+[tool.poetry.dependencies]
+python = "^3.8"
+zscaler-sdk-python = "*"
+xmltodict = "*"
+boto3 = "*"
+paramiko = "*"
+
+[tool.poetry.dev-dependencies]
+ansible = "*"
+ansible-lint = "*"
+

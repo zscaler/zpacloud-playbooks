@@ -1,0 +1,64 @@
+---
+# zpa_policy_forwarding_rule_facts.yml - Create/Update/Delete a Policy Forwarding Rule.
+#
+# Description
+# ===========
+#
+# Quick example of how to use the 'zpa_policy_forwarding_rule_facts' module to create a Policy Forwarding Rule in the ZPA Cloud.
+#
+# This playbook requires proper API credentials to be passed statically or via environment variables connection
+# to the ZPA Cloud 'client_id', 'client_secret', customer_id and 'cloud'. These may be defined as host variables
+# (see `host_vars/zpa_cloud.yml` for an example) or extra vars.
+#
+# Modules Used
+# ============
+#
+# zpa_policy_forwarding_rule_facts - https://zscaler.github.io/zpacloud-ansible/modules/zpa_policy_forwarding_rule_facts_module.html
+#
+# Usage
+# =====
+#
+#  $ ansible-playbook zpa_policy_forwarding_rule_facts.yml
+
+- name: Gather Policy Access Forwarding Rule Details
+  hosts: localhost
+  connection: local
+
+  vars:
+    zpa_cloud:
+      client_id: "{{ client_id }}"
+      client_secret: "{{ client_secret | default(omit) }}"
+      customer_id: "{{ customer_id | default(omit) }}"
+      cloud: "{{ cloud | default(omit) }}"
+
+  tasks:
+    - name: Gather All Forwarding Policy
+      zscaler.zpacloud.zpa_policy_access_forwarding_rule_facts:
+        provider: "{{ zpa_cloud }}"
+      register: forwarding_rules
+
+    - name: All Forwarding Policy
+      ansible.builtin.debug:
+        msg: "{{ forwarding_rules }}"
+
+    # Gather Specific Forwarding Policy Info By Name
+    - name: Forwarding Policy By Name
+      zscaler.zpacloud.zpa_policy_access_forwarding_rule_facts:
+        provider: "{{ zpa_cloud }}"
+        name: CRM_Example
+      register: forwarding_rule_name
+
+    - name: Forwarding Policy By Name
+      ansible.builtin.debug:
+        msg: "{{ forwarding_rule_name }}"
+
+    # Gather Specific Forwarding Policy Info By ID
+    - name: Forwarding Policy By ID
+      zscaler.zpacloud.zpa_policy_access_forwarding_rule_facts:
+        provider: "{{ zpa_cloud }}"
+        id: "216196257331282583"
+      register: forwarding_rule_id
+
+    - name: Forwarding Policy By ID
+      ansible.builtin.debug:
+        msg: "{{ forwarding_rule_id }}"

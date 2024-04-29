@@ -1,0 +1,63 @@
+---
+# zpa_service_edge_groups.yml - Get details (ID and/or Name) of a Service Edge Groups.
+#
+# Description
+# ===========
+#
+# Quick example of how to use the 'zpa_segment_group' module to create a Service Edge Groups
+# in the ZPA Cloud.
+#
+# This playbook requires proper API credentials to be passed statically or via environment variables connection
+# to the ZPA Cloud 'client_id', 'client_secret', customer_id and 'cloud'. These may be defined as host variables
+# (see `host_vars/zpa_cloud.yml` for an example) or extra vars.
+#
+# Modules Used
+# ============
+#
+# zpa_service_edge_groups - https://zscaler.github.io/zpacloud-ansible/modules/zpa_service_edge_groups_module.html
+#
+# Usage
+# =====
+#
+#  $ ansible-playbook zpa_service_edge_groups.yml
+
+- name: Gather Details of Service Edge Groups
+  hosts: localhost
+  connection: local
+
+  vars:
+    zpa_cloud:
+      client_id: "{{ client_id }}"
+      client_secret: "{{ client_secret | default(omit) }}"
+      customer_id: "{{ customer_id | default(omit) }}"
+      cloud: "{{ cloud | default(omit) }}"
+
+  tasks:
+    - name: Gather Detail Information of All Service Edge Groups
+      zscaler.zpacloud.zpa_service_edge_groups:
+        provider: "{{ zpa_cloud }}"
+      register: service_edge_groups
+
+    - name: All Service Edge Groups
+      ansible.builtin.debug:
+        msg: "{{ service_edge_groups }}"
+
+    - name: Gather Details of All Service Edge Groups by Name
+      zscaler.zpacloud.zpa_service_edge_groups:
+        provider: "{{ zpa_cloud }}"
+        name: Example
+      register: service_edge_group_name
+
+    - name: Service Edge Groups by Name
+      ansible.builtin.debug:
+        msg: "{{ service_edge_group_name }}"
+
+    - name: Gather Details of All Service Edge Groups by ID
+      zscaler.zpacloud.zpa_service_edge_groups:
+        provider: "{{ zpa_cloud }}"
+        id: "216196257331291969"
+      register: service_edge_group_id
+
+    - name: Service Edge Groups by ID
+      ansible.builtin.debug:
+        msg: "{{ service_edge_group_id }}"

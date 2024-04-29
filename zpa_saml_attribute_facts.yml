@@ -1,0 +1,66 @@
+---
+# zpa_saml_attribute_facts.yml - Get details (ID and/or Name) of a Saml Attribute resource.
+#
+# Description
+# ===========
+#
+# Quick example of how to use the 'zpa_saml_attribute_facts' module to retrieve a Saml Attribute details
+# from the ZPA Cloud.
+#
+# This playbook requires proper API credentials to be passed statically or via environment variables connection
+# to the ZPA Cloud 'client_id', 'client_secret', customer_id and 'cloud'. These may be defined as host variables
+# (see `host_vars/zpa_cloud.yml` for an example) or extra vars.
+#
+# Modules Used
+# ============
+#
+# zpa_saml_attribute_facts - https://zscaler.github.io/zpacloud-ansible/modules/zpa_saml_attribute_facts_module.html
+#
+# Usage
+# =====
+#
+#  $ ansible-playbook zpa_saml_attribute_facts.yml
+
+- name: Gather SAML Attribute Details
+  hosts: localhost
+  connection: local
+
+  vars:
+    zpa_cloud:
+      client_id: "{{ client_id }}"
+      client_secret: "{{ client_secret | default(omit) }}"
+      customer_id: "{{ customer_id | default(omit) }}"
+      cloud: "{{ cloud | default(omit) }}"
+
+  tasks:
+    # Gather all Saml Attribute Info
+    - name: Gather Details of All Saml Attributes
+      zscaler.zpacloud.zpa_saml_attribute_facts:
+        provider: "{{ zpa_cloud }}"
+      register: saml_attributes
+
+    - name: All SAML Attributes
+      ansible.builtin.debug:
+        msg: "{{ saml_attributes }}"
+
+    # Gather Specific Saml Attribute Info By Name
+    - name: Gather Details of a Specific Saml Attribute by Name
+      zscaler.zpacloud.zpa_saml_attribute_facts:
+        provider: "{{ zpa_cloud }}"
+        name: DepartmentName_User_Okta
+      register: saml_attribute_name
+
+    - name: Saml Attribute by Name
+      ansible.builtin.debug:
+        msg: "{{ saml_attribute_name }}"
+
+    # Gather Specific Saml Attribute Info By ID
+    - name: Gather Details of a Specific Saml Attribute by ID
+      zscaler.zpacloud.zpa_saml_attribute_facts:
+        provider: "{{ zpa_cloud }}"
+        id: "216196257331282583"
+      register: saml_attribute_id
+
+    - name: Saml Attribute by ID
+      ansible.builtin.debug:
+        msg: "{{ saml_attribute_id }}"

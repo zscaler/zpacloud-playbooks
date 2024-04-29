@@ -1,0 +1,100 @@
+---
+# zpa_service_edge_groups.yml - Create/Update/Delete a Service Edge Group.
+#
+# Description
+# ===========
+#
+# Quick example of how to use the 'zpa_service_edge_groups' module to create Service Edge Group in ZPA.
+#
+# This playbook requires proper API credentials to be passed statically or via environment variables connection
+# to the ZPA Cloud 'client_id', 'client_secret', customer_id and 'cloud'. These may be defined as host variables
+# (see `host_vars/zpa_cloud.yml` for an example) or extra vars.
+#
+# Modules Used
+# ============
+#
+# zpa_service_edge_groups - https://zscaler.github.io/zpacloud-ansible/modules/zpa_service_edge_groups_module.html
+#
+# Usage
+# =====
+#
+#  $ ansible-playbook zpa_service_edge_groups.yml
+
+- name: Creating Service Edge Groups
+  hosts: localhost
+  connection: local
+
+  vars:
+    zpa_cloud:
+      client_id: "{{ client_id }}"
+      client_secret: "{{ client_secret | default(omit) }}"
+      customer_id: "{{ customer_id | default(omit) }}"
+      cloud: "{{ cloud | default(omit) }}"
+
+  tasks:
+    - name: Create/Update/Delete Service Edge Group
+      zscaler.zpacloud.zpa_service_edge_groups:
+        provider: "{{ zpa_cloud }}"
+        name: "{{ item.name }}"
+        description: "{{ item.description }}"
+        enabled: "{{ item.enabled }}"
+        city_country: "{{ item.city_country }}"
+        country_code: "{{ item.country_code }}"
+        latitude: "{{ item.latitude }}"
+        longitude: "{{ item.longitude }}"
+        location: "{{ item.location }}"
+        is_public: "{{ item.is_public }}"
+        upgrade_day: "{{ item.upgrade_day }}"
+        override_version_profile: "{{ item.override_version_profile }}"
+        version_profile_id: "{{ item.version_profile_id }}"
+        grace_distance_enabled: "{{ item.grace_distance_enabled }}"
+        grace_distance_value: "{{ item.grace_distance_value }}"
+        grace_distance_value_unit: "{{ item.grace_distance_value_unit }}"
+      with_items:
+        - name: service_edge_group01
+          description: service_edge_group01
+          enabled: true
+          is_public: true
+          city_country: San Jose, US
+          country_code: US
+          latitude: "37.3382082"
+          longitude: "-121.8863286"
+          location: San Jose, CA, USA
+          upgrade_day: SUNDAY
+          override_version_profile: true
+          version_profile_id: "0"
+          grace_distance_enabled: true
+          grace_distance_value: "10.0"
+          grace_distance_value_unit: MILES
+
+        - name: service_edge_group02
+          description: service_edge_group02
+          enabled: true
+          is_public: true
+          city_country: San Francisco, US
+          country_code: US
+          latitude: "37.7749295"
+          longitude: "-122.4194155"
+          location: San Francisco, CA, USA
+          upgrade_day: SUNDAY
+          override_version_profile: true
+          version_profile_id: "0"
+          grace_distance_enabled: true
+          grace_distance_value: "10.0"
+          grace_distance_value_unit: MILES
+
+        - name: service_edge_group03
+          description: service_edge_group03
+          enabled: true
+          is_public: true
+          city_country: Toronto, CA
+          country_code: CA
+          latitude: "43.653226"
+          longitude: "-79.3831843"
+          location: Toronto, ON, Canada
+          upgrade_day: SUNDAY
+          override_version_profile: true
+          version_profile_id: "0"
+          grace_distance_enabled: true
+          grace_distance_value: "10.0"
+          grace_distance_value_unit: MILES

@@ -1,0 +1,58 @@
+---
+# zpa_provisioning_key.yml - Create/Update/Delete an Provisioning Key.
+#
+# Description
+# ===========
+#
+# Quick examples of how to use the 'zpa_provisioning_key' module to create an Provisioning Key
+# in the ZPA Cloud.
+#
+# This playbook requires proper API credentials to be passed statically or via environment variables connection
+# to the ZPA Cloud 'client_id', 'client_secret', customer_id and 'cloud'. These may be defined as host variables
+# (see `host_vars/zpa_cloud.yml` for an example) or extra vars.
+#
+# Modules Used
+# ============
+#
+# zpa_provisioning_key - https://zscaler.github.io/zpacloud-ansible/modules/zpa_provisioning_key_module.html
+#
+# Usage
+# =====
+#
+#  $ ansible-playbook zpa_provisioning_key.yml
+- name: Create Provisioning Key
+  hosts: localhost
+  connection: local
+
+  vars:
+    zpa_cloud:
+      client_id: "{{ client_id }}"
+      client_secret: "{{ client_secret | default(omit) }}"
+      customer_id: "{{ customer_id | default(omit) }}"
+      cloud: "{{ cloud | default(omit) }}"
+
+  tasks:
+    - name: Create App Connector Group
+      zscaler.zpacloud.zpa_app_connector_groups:
+        provider: "{{ zpa_cloud }}"
+        name: App_Connector_Group_One
+        description: App_Connector_Group_One
+        enabled: true
+        city_country: California, US
+        country_code: US
+        latitude: "37.3382082"
+        longitude: "-121.8863286"
+        location: San Jose, CA, USA
+        upgrade_day: SUNDAY
+        upgrade_time_in_secs: "66600"
+        override_version_profile: true
+        version_profile_id: "0"
+        dns_query_type: IPV4_IPV6
+
+    - name: Create App Connector Group Provisioning Key
+      zscaler.zpacloud.zpa_provisioning_key:
+        provider: "{{ zpa_cloud }}"
+        name: App Connector Group Provisioning Key
+        key_type: connector
+        max_usage: "10"
+        component_id: "{{ app_connector_group_id.data.id }}"

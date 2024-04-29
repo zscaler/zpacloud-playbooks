@@ -1,0 +1,62 @@
+---
+# zpa_server_group.yml - Create/Update/Delete a Server Group.
+#
+# Description
+# ===========
+#
+# Quick example of how to use the 'zpa_server_group' module to create a Server Group in the ZPA Cloud.
+#
+# This playbook requires proper API credentials to be passed statically or via environment variables connection
+# to the ZPA Cloud 'client_id', 'client_secret', customer_id and 'cloud'. These may be defined as host variables
+# (see `host_vars/zpa_cloud.yml` for an example) or extra vars.
+#
+# Modules Used
+# ============
+#
+# zpa_server_group - https://zscaler.github.io/zpacloud-ansible/modules/zpa_server_group_module.html
+#
+# Usage
+# =====
+#
+#  $ ansible-playbook zpa_server_group.yml
+
+- name: Creating Server Groups
+  hosts: localhost
+  connection: local
+
+  vars:
+    zpa_cloud:
+      client_id: "{{ client_id }}"
+      client_secret: "{{ client_secret | default(omit) }}"
+      customer_id: "{{ customer_id | default(omit) }}"
+      cloud: "{{ cloud | default(omit) }}"
+
+  tasks:
+    - name: Create App Connector Group
+      zscaler.zpacloud.zpa_app_connector_groups:
+        provider: "{{ zpa_cloud }}"
+        name: App_Connector_Group_One
+        description: App_Connector_Group_One
+        enabled: true
+        city_country: San Jose, US
+        country_code: US
+        latitude: "37.3382082"
+        longitude: "-121.8863286"
+        location: San Jose, CA, USA
+        upgrade_day: SUNDAY
+        upgrade_time_in_secs: "66600"
+        override_version_profile: true
+        version_profile_id: "0"
+      register: app_connector_group_id
+
+    - name: Create a Server Group - Dynamic Discovery Enabled
+      zscaler.zpacloud.zpa_server_group:
+        provider: "{{ zpa_cloud }}"
+        name: "{{ item.name }}"
+        description: "{{ item.description }}"
+        enabled: "{{ item.enabled }}"
+        dynamic_discovery: "{{ item.dynamic_discovery }}"
+        app_connector_group_ids:
+          - "{{ app_connector_group_id.data.id }}"
+      with_items:
+        - { name: Server_Group_One, description: Server_Group_One, enabled: true, dynamic_discovery: true }
