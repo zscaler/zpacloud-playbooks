@@ -1,11 +1,10 @@
+---
 name: Release
 
 on:
   push:
     branches: [master]
   pull_request:
-
-
 jobs:
   release:
     name: release
@@ -43,4 +42,3 @@ jobs:
           name: collection
           path: |
             *.tar.gz
-

@@ -1,3 +1,4 @@
+---
 name: Ansible Lint
 
 on:
@@ -6,10 +7,8 @@ on:
   pull_request:
     branches: [master]
   schedule:
-    - cron: '0 14 * * 1-5'
+    - cron: "0 14 * * 1-5"
   workflow_dispatch:
-
-
 env:
   NAMESPACE: zscaler
   COLLECTION_NAME: zpacloud
