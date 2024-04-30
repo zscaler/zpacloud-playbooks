@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "zpacloud-playbooks"
-version = "1.0.0"
+version = "1.0.2"
 description = "Sample playbooks for the Zscaler Private Access Ansible modules"
 authors = ["Zscaler, Inc. <devrel@zscaler.com>"]
 license = "MIT"
@@ -20,4 +20,5 @@ paramiko = "*"
 [tool.poetry.dev-dependencies]
 ansible = "*"
 ansible-lint = "*"
+ansible-core = "*"
 
