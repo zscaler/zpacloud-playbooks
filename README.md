@@ -1,5 +1,11 @@
-[![CI](https://github.com/zscaler/zpacloud-playbooks/actions/workflows/ci.yml/badge.svg)](https://github.com/zscaler/zpacloud-playbooks/actions/workflows/ci.yml)
-[![GitHub Release](https://img.shields.io/github/v/release/zscaler/zpacloud-playbooks.svg)](https://github.com/zscaler/zpacloud-playbooks/releases)
+[![Release](https://github.com/zscaler/zpacloud-playbooks/actions/workflows/release.yml/badge.svg)](https://github.com/zscaler/zpacloud-playbooks/actions/workflows/release.yml)
+[![Ansible Lint](https://github.com/zscaler/zpacloud-playbooks/actions/workflows/ansible-test-lint.yml/badge.svg?branch=master)](https://github.com/zscaler/zpacloud-playbooks/actions/workflows/ansible-test-lint.yml)
+[![License](https://img.shields.io/github/license/zscaler/zpacloud-ansible?color=blue)](https://github.com/zscaler/zpacloud-ansible/v2/blob/master/LICENSE)
+[![Zscaler Community](https://img.shields.io/badge/zscaler-community-blue)](https://community.zscaler.com/)
+## Zscaler Support
+
+-> **Disclaimer:** Please refer to our [General Support Statement](https://zscaler.github.io/zpacloud-ansible/support.html) before proceeding with the use of this collection. You can also refer to our [troubleshooting guide](https://zscaler.github.io/zpacloud-ansible/troubleshooting.html) for guidance on typical problems.
+
 # Zscaler Private Access - Ansible Playbooks
 
 Example Ansible playbooks using the Zscaler Private Access
@@ -9,7 +15,16 @@ Example Ansible playbooks using the Zscaler Private Access
 - [Documentation](https://zscaler.github.io/zpacloud-ansible)
 - [Repository](https://github.com/zscaler/zpacloud-ansible)
 - [Example Playbooks](https://github.com/zscaler/zpacloud-playbooks)
-    
+
+## Tested Ansible Versions
+
+This collection is tested with the most current Ansible releases.  Ansible versions
+before 2.15 are **not supported**.
+
+## Python Version
+
+The minimum python version for this collection is python `3.9`.
+
 ## Getting Started
 
 ### Installing Ansible
@@ -20,11 +35,20 @@ You'll want to generally follow the
 [Ansible documentation](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation_module.html#installing-the-control-node)
 for installing Ansible on your machine, but here are quick instructions for popular choices:
 
+#### macOS 10.15
+
+Install from Pip (Python package manager):
+
+```shell
+pip3 install --user ansible
+export PATH=$PATH:$HOME/Library/Python/3.9/bin
+```
+
 #### CentOS
 
 Install from [EPEL](https://fedoraproject.org/wiki/EPEL):
 
-```
+```shell
 sudo yum install epel-release
 sudo yum install ansible
 ```
@@ -33,48 +57,45 @@ sudo yum install ansible
 
 Install from the Ansible PPA:
 
-```
+```shell
 sudo apt update
 sudo apt install software-properties-common
 sudo apt-add-repository --yes --update ppa:ansible/ansible
 sudo apt install ansible
 ```
 
-#### macOS 10.15
-
-Install from Pip (Python package manager):
-
-```
-pip3 install --user ansible
-export PATH=$PATH:$HOME/Library/Python/3.7/bin
-```
-
 You'll want to permanently modify the PATH in your shell's config file as well.
+
+## ZPA Ansible Collection Module Installation
+
+Install this collection using the Ansible Galaxy CLI:
+
+```shell
+ansible-galaxy collection install zscaler.zpacloud
+```
+
+You can also include it in a `requirements.yml` file and install it via `ansible-galaxy collection install -r requirements.yml`, using the format:
+
+```yaml
+  collections:
+    - zscaler.zpacloud
+```
 
 ### Clone this repository, install ZPA Collection
 
 Once you're done with installing Ansible, clone this repo, and install the ZPA collection from Ansible Galaxy as well as the Python modules it depends on:
 
-```
+
+```shell
 git clone https://github.com/zscaler/zpacloud-playbooks.git
 cd ansible-playbooks/
 ansible-galaxy collection install -r collections/requirements.yml
 pip3 install --user -r requirements.txt
 ```
 
-### Customize connection parameters
-
-The supplied inventory sets variables for each host in the `host_vars` directory.  Authentication credentials are not included, and should be specified either on the CLI, or in a seperate file like so:
-
-```
-ansible-playbook -i inventory check_ready.yml -e @creds.yml
-```
-
-You're now ready to start using these playbooks.
-
 ## Sample Playbooks
 
-You can use these playbooks as a base by cloning this repository.  Each of them is documented with how to run them via
+You can use these playbooks as a base by cloning this repository. Each of them is documented with how to run them via
 `ansible-playbook` and their customization options.
 
 ## Included content
@@ -87,15 +108,14 @@ You can use these playbooks as a base by cloning this repository.  Each of them 
 - [zpa_application_server_facts](https://zscaler.github.io/zpacloud-ansible/modules/zpa_application_server_facts_module.html) - Gather information details (ID and/or Name) of an application server.
 - [zpa_ba_certificate_facts](https://zscaler.github.io/zpacloud-ansible/modules/zpa_ba_certificate_facts_module.html) - Gather information details (ID and/or Name) of an browser access certificate.
 - [zpa_cloud_connector_group_facts](https://zscaler.github.io/zpacloud-ansible/modules/zpa_cloud_connector_group_facts_module.html) - Gather information details (ID and/or Name) of an cloud connector group.
-- [zpa_customer_version_profile_facts](https://zscaler.github.io/zpacloud-ansible/modules/zpa_customer_version_profile_facts_module.html) - Gather information details (ID and/or Name) of an customer version profile for use in app connector group resource in the `version_profile_id` parameter.
 - [zpa_enrollment_cert_facts](https://zscaler.github.io/zpacloud-ansible/modules/zpa_enrollment_cert_facts_module.html) - Gather information details (ID and/or Name) of an enrollment certificate for use when creating provisioning keys for connector groups or service edge groups.
 - [zpa_idp_controller_facts](https://zscaler.github.io/zpacloud-ansible/modules/zpa_idp_controller_facts_module.html) - Gather information details (ID and/or Name) of an identity provider (IdP) created in the ZPA tenant.
 - [zpa_machine_group_facts](https://zscaler.github.io/zpacloud-ansible/modules/zpa_machine_group_facts_module.html) - Gather information details (ID and/or Name) of an machine group for use in a policy access and/or forwarding rules.
 - [zpa_policy_access_rule](https://zscaler.github.io/zpacloud-ansible/modules/zpa_policy_access_rule_module.html) - Create/Update/Delete a policy access rule.
 - [zpa_policy_access_rule_facts](https://zscaler.github.io/zpacloud-ansible/modules/zpa_policy_access_rule_facts_module.html) - Gather information details (ID and/or Name) of a policy access rule.
-- [zpa_policy_timeout_rule](https://zscaler.github.io/zpacloud-ansible/modules/zpa_policy_timeout_rule_module.html) - Create/Update/Delete a policy access timeout rule.
-- [zpa_policy_timeout_rule_facts](https://zscaler.github.io/zpacloud-ansible/modules/zpa_policy_timeout_rule_facts_module.html) - Gather information details (ID and/or Name) of a policy access timeout rule.
-- [zpa_policy_forwarding_rule](https://zscaler.github.io/zpacloud-ansible/modules/zpa_policy_forwarding_rule_module.html) - Create/Update/Delete a policy access forwarding rule.
+- [zpa_policy_access_timeout_rule](https://zscaler.github.io/zpacloud-ansible/modules/zpa_policy_access_timeout_rule_module.html) - Create/Update/Delete a policy access timeout rule.
+- [zpa_policy_timeout_rule_facts](https://zscaler.github.io/zpacloud-ansible/modules/zpa_policy_access_timeout_rule_facts_module.html) - Gather information details (ID and/or Name) of a policy access timeout rule.
+- [zpa_policy_forwarding_rule](https://zscaler.github.io/zpacloud-ansible/modules/zpa_policy_access_forwarding_rule_facts_module.html) - Create/Update/Delete a policy access forwarding rule.
 - [zpa_policy_forwarding_rule_facts](https://zscaler.github.io/zpacloud-ansible/modules/zpa_policy_forwarding_rule_facts_module.html) - Gather information details (ID and/or Name) of a policy access forwarding rule.
 - [zpa_posture_profile_facts](https://zscaler.github.io/zpacloud-ansible/modules/zpa_posture_profile_facts_module.html) - Gather information details (ID and/or Name) of a posture profile to use in a policy access, timeout or forwarding rules.
 - [zpa_provisioning_key](https://zscaler.github.io/zpacloud-ansible/modules/zpa_provisioning_key_module.html) - Create/Update/Delete a provisioning key.
@@ -107,6 +127,28 @@ You can use these playbooks as a base by cloning this repository.  Each of them 
 - [zpa_segment_group_facts](https://zscaler.github.io/zpacloud-ansible/modules/zpa_segment_group_facts_module.html) - Gather information details (ID and/or Name) of a segment group.
 - [zpa_server_group](https://zscaler.github.io/zpacloud-ansible/modules/zpa_server_group_module.html) - Create/Update/Delete a segment group.
 - [zpa_server_group_facts](https://zscaler.github.io/zpacloud-ansible/modules/zpa_server_group_facts_module.html) - Gather information details (ID and/or Name) of a server group.
-- [zpa_service_edge_group_facts](https://zscaler.github.io/zpacloud-ansible/modules/zpa_service_edge_group_facts_module.html) - Gather information details (ID and/or Name) of a service edge group.
-- [zpa_service_edge_group](https://zscaler.github.io/zpacloud-ansible/modules/zpa_service_edge_group_module.html) - Create/Update/Delete an service edge group.
-- [zpa_trusted_network_facts](https://zscaler.github.io/zpacloud-ansible/modules/zpa_trusted_network_facts_module.html) - Gather information details (ID and/or Name) of a trusted network for use in a policy access and/or forwarding rules.
+- [zpa_service_edge_group_facts](https://zscaler.github.io/zpacloud-ansible/modules/zpa_service_edge_groups_facts_module.html) - Gather information details (ID and/or Name) of a service edge group.
+- [zpa_service_edge_group](https://zscaler.github.io/zpacloud-ansible/modules/zpa_service_edge_groups_module.html) - Create/Update/Delete an service edge group.
+- [zpa_trusted_network_facts](https://zscaler.github.io/zpacloud-ansible/modules/zpa_trusted_networks_facts_module.html) - Gather information details (ID and/or Name) of a trusted network for use in a policy access and/or forwarding rules.
+
+## MIT License
+
+Copyright (c) 2023 [Zscaler](https://github.com/zscaler)
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
