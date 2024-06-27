@@ -35,7 +35,7 @@
     - name: Gather Details of All Application Segments
       zscaler.zpacloud.zpa_application_segment_facts:
         provider: "{{ zpa_cloud }}"
-      register: result
+      register: all_app_segments
 
     - name: All App Segment Details
       ansible.builtin.debug:
