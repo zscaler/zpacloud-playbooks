@@ -2,6 +2,7 @@
 [![Ansible Lint](https://github.com/zscaler/zpacloud-playbooks/actions/workflows/ansible-test-lint.yml/badge.svg?branch=master)](https://github.com/zscaler/zpacloud-playbooks/actions/workflows/ansible-test-lint.yml)
 [![License](https://img.shields.io/github/license/zscaler/zpacloud-ansible?color=blue)](https://github.com/zscaler/zpacloud-ansible/v2/blob/master/LICENSE)
 [![Zscaler Community](https://img.shields.io/badge/zscaler-community-blue)](https://community.zscaler.com/)
+
 ## Zscaler Support
 
 -> **Disclaimer:** Please refer to our [General Support Statement](https://zscaler.github.io/zpacloud-ansible/support.html) before proceeding with the use of this collection. You can also refer to our [troubleshooting guide](https://zscaler.github.io/zpacloud-ansible/troubleshooting.html) for guidance on typical problems.
