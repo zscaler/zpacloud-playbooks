@@ -18,7 +18,7 @@
 # Usage
 # =====
 #
-#  $ ansible-playbook zpa_application_segment_facts.yml
+#  $ ansible-playbook zpa_application_segment_info.yml
 
 - name: Create Policy Access Timeout Rules
   hosts: localhost
@@ -34,20 +34,20 @@
   tasks:
     # Gather Applicaton Segment Info
     - name: Application Segment - Example
-      zscaler.zpacloud.zpa_application_segment_facts:
+      zscaler.zpacloud.zpa_application_segment_info:
         provider: "{{ zpa_cloud }}"
         name: Example
       register: application_segment
 
     # Get IdP Controller ID Information
     - name: Get information IdP Controller ID
-      zscaler.zpacloud.zpa_idp_controller_facts:
+      zscaler.zpacloud.zpa_idp_controller_info:
         provider: "{{ zpa_cloud }}"
         name: IdP_Name
       register: idp_name
 
     - name: Get Contractors SCIM Group ID
-      zscaler.zpacloud.zpa_scim_group_facts:
+      zscaler.zpacloud.zpa_scim_group_info:
         provider: "{{ zpa_cloud }}"
         name: Contractors
         idp_name: IdP_Name

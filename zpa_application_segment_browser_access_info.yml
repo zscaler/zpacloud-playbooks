@@ -1,10 +1,10 @@
 ---
-# zpa_application_segment_browser_access_facts.yml - Create/Update/Delete an Application Segment.
+# zpa_application_segment_browser_access_info.yml - Create/Update/Delete an Application Segment.
 #
 # Description
 # ===========
 #
-# Quick examples of how to use the 'zpa_application_segment_browser_access_facts' module to create an Application Segment in the ZPA Cloud.
+# Quick examples of how to use the 'zpa_application_segment_browser_access_info' module to create an Application Segment in the ZPA Cloud.
 #
 # This playbook requires proper API credentials to be passed statically or via environment variables connection
 # to the ZPA Cloud 'client_id', 'client_secret', customer_id and 'cloud'. These may be defined as host variables
@@ -13,12 +13,12 @@
 # Modules Used
 # ============
 #
-# zpa_application_segment_browser_access_facts - https://zscaler.github.io/zpacloud-ansible/modules/zpa_browser_access_facts_module.html
+# zpa_application_segment_browser_access_info - https://zscaler.github.io/zpacloud-ansible/modules/zpa_application_segment_browser_access_info_module.html
 #
 # Usage
 # =====
 #
-#  $ ansible-playbook zpa_application_segment_browser_access_facts.yml
+#  $ ansible-playbook zpa_application_segment_browser_access_info.yml
 
 - name: Gather Details of Browser Access Application Segments
   hosts: localhost
@@ -33,7 +33,7 @@
 
   tasks:
     - name: Retrieve All Browser Access Application Segments
-      zscaler.zpacloud.zpa_application_segment_browser_access_facts:
+      zscaler.zpacloud.zpa_application_segment_browser_access_info:
       register: result
 
     - name: All BA App Segment Details
@@ -41,7 +41,7 @@
         msg: "{{ result }}"
 
     - name: Gather Specific Browser Access Application Segment By Name
-      zscaler.zpacloud.zpa_application_segment_browser_access_facts:
+      zscaler.zpacloud.zpa_application_segment_browser_access_info:
         name: BA_App_Segment_Name
       register: ba01_result_name
 
@@ -51,7 +51,7 @@
 
     # Gather Specific Browser Access Application Segment By ID
     - name: CRM_Example By ID
-      zscaler.zpacloud.zpa_application_segment_browser_access_facts:
+      zscaler.zpacloud.zpa_application_segment_browser_access_info:
         id: "12345678910"
       register: ba01_result_id
 

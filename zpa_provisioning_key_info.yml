@@ -1,10 +1,10 @@
 ---
-# zpa_provisioning_key_facts.yml - Get details (ID and/or Name) of a Provisioning Key by association type (CONNECTOR_GRP or SERVICE_EDGE_GRP).
+# zpa_provisioning_key_info.yml - Get details (ID and/or Name) of a Provisioning Key by association type (CONNECTOR_GRP or SERVICE_EDGE_GRP).
 #
 # Description
 # ===========
 #
-# Quick examples of how to use the 'zpa_provisioning_key_facts' module to retrieve  details of a Provisioning Key by association type in the ZPA Cloud.
+# Quick examples of how to use the 'zpa_provisioning_key_info' module to retrieve  details of a Provisioning Key by association type in the ZPA Cloud.
 #
 # This playbook requires proper API credentials to be passed statically or via environment variables connection
 # to the ZPA Cloud 'client_id', 'client_secret', customer_id and 'cloud'. These may be defined as host variables
@@ -13,12 +13,12 @@
 # Modules Used
 # ============
 #
-# zpa_provisioning_key_facts - https://zscaler.github.io/zpacloud-ansible/modules/zpa_provisioning_key_module.html
+# zpa_provisioning_key_info - https://zscaler.github.io/zpacloud-ansible/modules/zpa_provisioning_key_module.html
 #
 # Usage
 # =====
 #
-#  $ ansible-playbook zpa_provisioning_key_facts.yml
+#  $ ansible-playbook zpa_provisioning_key_info.yml
 
 # Gather Details of All CONNECTOR_GRP Provisioning Keys
 
@@ -35,7 +35,7 @@
 
   tasks:
     - name: Gather Details of All Connector Group Provisioning Keys
-      zscaler.zpacloud.zpa_provisioning_key_facts:
+      zscaler.zpacloud.zpa_provisioning_key_info:
         provider: "{{ zpa_cloud }}"
         key_type: connector
       register: all_connector_grp_keys
@@ -45,7 +45,7 @@
         msg: "{{ all_connector_grp_keys }}"
 
     - name: Gather Details of All Connector Group Provisioning Keys by Name
-      zscaler.zpacloud.zpa_provisioning_key_facts:
+      zscaler.zpacloud.zpa_provisioning_key_info:
         provider: "{{ zpa_cloud }}"
         name: App Connector Group Key
         key_type: connector
@@ -56,7 +56,7 @@
         msg: "{{ connector_grp_key_name }}"
 
     - name: Gather Details of All Connector Group Provisioning Keys by ID
-      zscaler.zpacloud.zpa_provisioning_key_facts:
+      zscaler.zpacloud.zpa_provisioning_key_info:
         provider: "{{ zpa_cloud }}"
         id: "8691"
         key_type: connector
@@ -73,7 +73,7 @@
 
   tasks:
     - name: Gather Details of All Service Edge Group Provisioning Keys
-      zscaler.zpacloud.zpa_provisioning_key_facts:
+      zscaler.zpacloud.zpa_provisioning_key_info:
         provider: "{{ zpa_cloud }}"
         key_type: service_edge
       register: all_edge_grp_key_name
@@ -83,7 +83,7 @@
         msg: "{{ all_edge_grp_key_name }}"
 
     - name: Gather Details of All Service Edge Group Provisioning Keys by Name
-      zscaler.zpacloud.zpa_provisioning_key_facts:
+      zscaler.zpacloud.zpa_provisioning_key_info:
         provider: "{{ zpa_cloud }}"
         name: Example Service Edge Group
         key_type: service_edge
@@ -94,7 +94,7 @@
         msg: "{{ edge_grp_key_name }}"
 
     - name: Gather Details of All Service Edge Group Provisioning Keys by ID
-      zscaler.zpacloud.zpa_provisioning_key_facts:
+      zscaler.zpacloud.zpa_provisioning_key_info:
         provider: "{{ zpa_cloud }}"
         id: "8691"
         key_type: service_edge

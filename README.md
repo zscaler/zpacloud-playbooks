@@ -2,6 +2,7 @@
 [![Ansible Lint](https://github.com/zscaler/zpacloud-playbooks/actions/workflows/ansible-test-lint.yml/badge.svg?branch=master)](https://github.com/zscaler/zpacloud-playbooks/actions/workflows/ansible-test-lint.yml)
 [![License](https://img.shields.io/github/license/zscaler/zpacloud-ansible?color=blue)](https://github.com/zscaler/zpacloud-ansible/v2/blob/master/LICENSE)
 [![Zscaler Community](https://img.shields.io/badge/zscaler-community-blue)](https://community.zscaler.com/)
+
 ## Zscaler Support
 
 -> **Disclaimer:** Please refer to our [General Support Statement](https://zscaler.github.io/zpacloud-ansible/support.html) before proceeding with the use of this collection. You can also refer to our [troubleshooting guide](https://zscaler.github.io/zpacloud-ansible/troubleshooting.html) for guidance on typical problems.
@@ -93,6 +94,29 @@ ansible-galaxy collection install -r collections/requirements.yml
 pip3 install --user -r requirements.txt
 ```
 
+## Customize Connection Parameters
+
+### Using Credential File
+```sh
+$ ansible-playbook main.yml -e @creds.yml
+```
+
+The credential file must be in `yaml` format:
+```yml
+  client_id: "your_client_id"
+  client_secret: "your_client_secret"
+  customer_id: "your_customer_id"
+  cloud: "PRODUCTION"
+```
+
+### Using Environment Variables - Linux and MacOS
+```sh
+  export ZPA_CLIENT_ID="your_client_id"
+  export ZPA_CLIENT_SECRET="your_client_secret"
+  export ZPA_CUSTOMER_ID="your_customer_id"
+  export ZPA_CLOUD="PRODUCTION"
+```
+
 ## Sample Playbooks
 
 You can use these playbooks as a base by cloning this repository. Each of them is documented with how to run them via
@@ -101,35 +125,35 @@ You can use these playbooks as a base by cloning this repository. Each of them i
 ## Included content
 
 - [zpa_app_connector_groups](https://zscaler.github.io/zpacloud-ansible/modules/zpa_app_connector_groups_module.html) - Create/Update/Delete an app connector group.
-- [zpa_app_connector_groups_facts](https://zscaler.github.io/zpacloud-ansible/modules/zpa_app_connector_groups_facts_module.html) - Gather information details (ID and/or Name) of a app connector group.
+- [zpa_app_connector_groups_info](https://zscaler.github.io/zpacloud-ansible/modules/zpa_app_connector_groups_info_module.html) - Gather information details (ID and/or Name) of a app connector group.
 - [zpa_application_segment](https://zscaler.github.io/zpacloud-ansible/modules/zpa_application_segment_module.html) - Create/Update/Delete an application segment.
-- [zpa_application_segment_facts](https://zscaler.github.io/zpacloud-ansible/modules/zpa_application_segment_facts_module.html) - Gather information details (ID and/or Name) of a application segment.
+- [zpa_application_segment_info](https://zscaler.github.io/zpacloud-ansible/modules/zpa_application_segment_info_module.html) - Gather information details (ID and/or Name) of a application segment.
 - [zpa_application_server](https://zscaler.github.io/zpacloud-ansible/modules/zpa_application_server_module.html) - Create/Update/Delete an Application Server.
-- [zpa_application_server_facts](https://zscaler.github.io/zpacloud-ansible/modules/zpa_application_server_facts_module.html) - Gather information details (ID and/or Name) of an application server.
-- [zpa_ba_certificate_facts](https://zscaler.github.io/zpacloud-ansible/modules/zpa_ba_certificate_facts_module.html) - Gather information details (ID and/or Name) of an browser access certificate.
-- [zpa_cloud_connector_group_facts](https://zscaler.github.io/zpacloud-ansible/modules/zpa_cloud_connector_group_facts_module.html) - Gather information details (ID and/or Name) of an cloud connector group.
-- [zpa_enrollment_cert_facts](https://zscaler.github.io/zpacloud-ansible/modules/zpa_enrollment_cert_facts_module.html) - Gather information details (ID and/or Name) of an enrollment certificate for use when creating provisioning keys for connector groups or service edge groups.
-- [zpa_idp_controller_facts](https://zscaler.github.io/zpacloud-ansible/modules/zpa_idp_controller_facts_module.html) - Gather information details (ID and/or Name) of an identity provider (IdP) created in the ZPA tenant.
-- [zpa_machine_group_facts](https://zscaler.github.io/zpacloud-ansible/modules/zpa_machine_group_facts_module.html) - Gather information details (ID and/or Name) of an machine group for use in a policy access and/or forwarding rules.
+- [zpa_application_server_info](https://zscaler.github.io/zpacloud-ansible/modules/zpa_application_server_info_module.html) - Gather information details (ID and/or Name) of an application server.
+- [zpa_ba_certificate_info](https://zscaler.github.io/zpacloud-ansible/modules/zpa_ba_certificate_info_module.html) - Gather information details (ID and/or Name) of an browser access certificate.
+- [zpa_cloud_connector_group_info](https://zscaler.github.io/zpacloud-ansible/modules/zpa_cloud_connector_group_info_module.html) - Gather information details (ID and/or Name) of an cloud connector group.
+- [zpa_enrollment_cert_info](https://zscaler.github.io/zpacloud-ansible/modules/zpa_enrollment_cert_info_module.html) - Gather information details (ID and/or Name) of an enrollment certificate for use when creating provisioning keys for connector groups or service edge groups.
+- [zpa_idp_controller_info](https://zscaler.github.io/zpacloud-ansible/modules/zpa_idp_controller_info_module.html) - Gather information details (ID and/or Name) of an identity provider (IdP) created in the ZPA tenant.
+- [zpa_machine_group_info](https://zscaler.github.io/zpacloud-ansible/modules/zpa_machine_group_info_module.html) - Gather information details (ID and/or Name) of an machine group for use in a policy access and/or forwarding rules.
 - [zpa_policy_access_rule](https://zscaler.github.io/zpacloud-ansible/modules/zpa_policy_access_rule_module.html) - Create/Update/Delete a policy access rule.
-- [zpa_policy_access_rule_facts](https://zscaler.github.io/zpacloud-ansible/modules/zpa_policy_access_rule_facts_module.html) - Gather information details (ID and/or Name) of a policy access rule.
+- [zpa_policy_access_rule_info](https://zscaler.github.io/zpacloud-ansible/modules/zpa_policy_access_rule_info_module.html) - Gather information details (ID and/or Name) of a policy access rule.
 - [zpa_policy_access_timeout_rule](https://zscaler.github.io/zpacloud-ansible/modules/zpa_policy_access_timeout_rule_module.html) - Create/Update/Delete a policy access timeout rule.
-- [zpa_policy_timeout_rule_facts](https://zscaler.github.io/zpacloud-ansible/modules/zpa_policy_access_timeout_rule_facts_module.html) - Gather information details (ID and/or Name) of a policy access timeout rule.
-- [zpa_policy_forwarding_rule](https://zscaler.github.io/zpacloud-ansible/modules/zpa_policy_access_forwarding_rule_facts_module.html) - Create/Update/Delete a policy access forwarding rule.
-- [zpa_policy_forwarding_rule_facts](https://zscaler.github.io/zpacloud-ansible/modules/zpa_policy_forwarding_rule_facts_module.html) - Gather information details (ID and/or Name) of a policy access forwarding rule.
-- [zpa_posture_profile_facts](https://zscaler.github.io/zpacloud-ansible/modules/zpa_posture_profile_facts_module.html) - Gather information details (ID and/or Name) of a posture profile to use in a policy access, timeout or forwarding rules.
+- [zpa_policy_timeout_rule_info](https://zscaler.github.io/zpacloud-ansible/modules/zpa_policy_access_timeout_rule_info_module.html) - Gather information details (ID and/or Name) of a policy access timeout rule.
+- [zpa_policy_forwarding_rule](https://zscaler.github.io/zpacloud-ansible/modules/zpa_policy_access_forwarding_rule_info_module.html) - Create/Update/Delete a policy access forwarding rule.
+- [zpa_policy_forwarding_rule_info](https://zscaler.github.io/zpacloud-ansible/modules/zpa_policy_forwarding_rule_info_module.html) - Gather information details (ID and/or Name) of a policy access forwarding rule.
+- [zpa_posture_profile_info](https://zscaler.github.io/zpacloud-ansible/modules/zpa_posture_profile_info_module.html) - Gather information details (ID and/or Name) of a posture profile to use in a policy access, timeout or forwarding rules.
 - [zpa_provisioning_key](https://zscaler.github.io/zpacloud-ansible/modules/zpa_provisioning_key_module.html) - Create/Update/Delete a provisioning key.
-- [zpa_provisioning_key_facts](https://zscaler.github.io/zpacloud-ansible/modules/zpa_provisioning_key_facts_module.html) - Gather information details (ID and/or Name) of a provisioning key.
-- [zpa_saml_attribute_facts](https://zscaler.github.io/zpacloud-ansible/modules/zpa_saml_attribute_facts_module.html) - Gather information details (ID and/or Name) of a saml attribute.
-- [zpa_scim_attribute_header_facts](https://zscaler.github.io/zpacloud-ansible/modules/zpa_scim_attribute_header_facts_module.html) - Gather information details (ID and/or Name) of a scim attribute header.
-- [zpa_scim_group_facts](https://zscaler.github.io/zpacloud-ansible/modules/zpa_scim_group_facts_module.html) - Gather information details (ID and/or Name) of a scim group.
+- [zpa_provisioning_key_info](https://zscaler.github.io/zpacloud-ansible/modules/zpa_provisioning_key_info_module.html) - Gather information details (ID and/or Name) of a provisioning key.
+- [zpa_saml_attribute_info](https://zscaler.github.io/zpacloud-ansible/modules/zpa_saml_attribute_info_module.html) - Gather information details (ID and/or Name) of a saml attribute.
+- [zpa_scim_attribute_header_info](https://zscaler.github.io/zpacloud-ansible/modules/zpa_scim_attribute_header_info_module.html) - Gather information details (ID and/or Name) of a scim attribute header.
+- [zpa_scim_group_info](https://zscaler.github.io/zpacloud-ansible/modules/zpa_scim_group_info_module.html) - Gather information details (ID and/or Name) of a scim group.
 - [zpa_segment_group](https://zscaler.github.io/zpacloud-ansible/modules/zpa_segment_group_module.html) - Create/Update/Delete a segment group.
-- [zpa_segment_group_facts](https://zscaler.github.io/zpacloud-ansible/modules/zpa_segment_group_facts_module.html) - Gather information details (ID and/or Name) of a segment group.
+- [zpa_segment_group_info](https://zscaler.github.io/zpacloud-ansible/modules/zpa_segment_group_info_module.html) - Gather information details (ID and/or Name) of a segment group.
 - [zpa_server_group](https://zscaler.github.io/zpacloud-ansible/modules/zpa_server_group_module.html) - Create/Update/Delete a segment group.
-- [zpa_server_group_facts](https://zscaler.github.io/zpacloud-ansible/modules/zpa_server_group_facts_module.html) - Gather information details (ID and/or Name) of a server group.
-- [zpa_service_edge_group_facts](https://zscaler.github.io/zpacloud-ansible/modules/zpa_service_edge_groups_facts_module.html) - Gather information details (ID and/or Name) of a service edge group.
+- [zpa_server_group_info](https://zscaler.github.io/zpacloud-ansible/modules/zpa_server_group_info_module.html) - Gather information details (ID and/or Name) of a server group.
+- [zpa_service_edge_group_info](https://zscaler.github.io/zpacloud-ansible/modules/zpa_service_edge_groups_info_module.html) - Gather information details (ID and/or Name) of a service edge group.
 - [zpa_service_edge_group](https://zscaler.github.io/zpacloud-ansible/modules/zpa_service_edge_groups_module.html) - Create/Update/Delete an service edge group.
-- [zpa_trusted_network_facts](https://zscaler.github.io/zpacloud-ansible/modules/zpa_trusted_networks_facts_module.html) - Gather information details (ID and/or Name) of a trusted network for use in a policy access and/or forwarding rules.
+- [zpa_trusted_network_info](https://zscaler.github.io/zpacloud-ansible/modules/zpa_trusted_networks_info_module.html) - Gather information details (ID and/or Name) of a trusted network for use in a policy access and/or forwarding rules.
 
 ## MIT License
 

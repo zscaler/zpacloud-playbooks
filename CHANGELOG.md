@@ -1,19 +1,34 @@
-### [1.0.2](https://github.com/zscaler/zpacloud-playbooks/compare/v1.0.1...v1.0.2) (2024-04-30)
+# Zscaler Private Access (ZPA) Ansible Playbooks
+
+## 1.1.0 (September, 3 2024)
+
+### Notes
+
+- Python Versions: **v3.9, v3.10, v3.11**
+
+### Feature
+
+* - [PR #3](https://github.com/zscaler/zpacloud-playbooks/pull/3) Added Privileged Remote Access Playbooks 
 
 
-### Bug Fixes
 
-* Added ansible-core to pyproject.toml ([181b6ab](https://github.com/zscaler/zpacloud-playbooks/commit/181b6ab5a1be2e9ad35f4e8b1f14e993e63553ca))
+## 1.0.1 (August, 29 2024)
 
-### [1.0.1](https://github.com/zscaler/zpacloud-playbooks/compare/v1.0.0...v1.0.1) (2024-04-30)
+### Notes
 
+- Python Versions: **v3.9, v3.10, v3.11**
 
 ### Bug Fixes
 
 * Fixed README links and instructions ([a23cf4a](https://github.com/zscaler/zpacloud-playbooks/commit/a23cf4ab41325ee055c3af38948f959c01362ec5))
 
-## 1.0.0 (2024-04-29)
 
+
+## 1.0.0 (August, 29 2024)
+
+### Notes
+
+- Python Versions: **v3.9, v3.10, v3.11**
 
 ### Features
 

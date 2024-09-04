@@ -11,11 +11,12 @@ documentation = "https://zscaler-sdk-python.readthedocs.io"
 keywords = ["zpacloud", "zpacloud-ansible", "zpa"]
 
 [tool.poetry.dependencies]
-python = "^3.8"
-zscaler-sdk-python = "*"
+python = "^3.9"
+zscaler-sdk-python = ">=0.2.0"
 xmltodict = "*"
 boto3 = "*"
 paramiko = "*"
+urllib3 = "^1.26.19"
 
 [tool.poetry.dev-dependencies]
 ansible = "*"

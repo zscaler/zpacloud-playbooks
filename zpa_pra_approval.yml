@@ -1,0 +1,60 @@
+---
+# zpa_pra_approval.yml - Create/Update/Delete a PRA Approval Controller resource.
+#
+# Description
+# ===========
+#
+# Quick example of how to use the 'zpa_pra_approval' module to create a PRA Approval Controller in the ZPA Cloud.
+#
+# This playbook requires proper API credentials to be passed statically or via environment variables connection
+# to the ZPA Cloud 'client_id', 'client_secret', customer_id and 'cloud'. These may be defined as host variables
+# (see `host_vars/zpa_cloud.yml` for an example) or extra vars.
+#
+# Modules Used
+# ============
+#
+# zpa_pra_approval - https://zscaler.github.io/zpacloud-ansible/modules/zpa_pra_approval_module.html
+#
+# Usage
+# =====
+#
+#  $ ansible-playbook zpa_pra_approval.yml
+
+- name: Create PRA Approval
+  hosts: localhost
+  connection: local
+
+  vars:
+    zpa_cloud:
+      client_id: "{{ client_id }}"
+      client_secret: "{{ client_secret | default(omit) }}"
+      customer_id: "{{ customer_id | default(omit) }}"
+      cloud: "{{ cloud | default(omit) }}"
+
+  tasks:
+    - name: Create PRA Approval
+      zscaler.zpacloud.zpa_pra_approval:
+        provider: '{{ zpa_cloud }}'
+        state: present
+        email_ids:
+          - 'jdoe@example.com'
+        start_time: 'Thu, 09 May 2024 8:00:00 PST'
+        end_time: 'Mon, 10 Jun 2024 5:00:00 PST'
+        application_ids:
+          - '216199618143356658'
+          - '216199618143356661'
+        working_hours:
+          days:
+            - 'FRI'
+            - 'MON'
+            - 'SAT'
+            - 'SUN'
+            - 'THU'
+            - 'TUE'
+            - 'WED'
+          start_time: '09:00'
+          end_time: '17:00'
+          start_time_cron: '0 0 16 ? * MON,TUE,WED,THU,FRI,SAT,SUN'
+          end_time_cron: '0 0 0 ? * MON,TUE,WED,THU,FRI,SAT,SUN'
+          time_zone: 'America/Vancouver'
+      register: result
