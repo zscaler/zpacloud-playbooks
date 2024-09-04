@@ -8,7 +8,7 @@
 
 ### Feature
 
-* - [PR #2](https://github.com/zscaler/zpacloud-playbooks/pull/2) Added Privileged Remote Access Playbooks 
+* - [PR #3](https://github.com/zscaler/zpacloud-playbooks/pull/3) Added Privileged Remote Access Playbooks 
 
 
 
