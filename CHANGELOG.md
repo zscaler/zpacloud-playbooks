@@ -6,9 +6,9 @@
 
 - Python Versions: **v3.9, v3.10, v3.11**
 
-### Bug Fixes
+### Feature
 
-* Fixed README links and instructions ([a23cf4a](https://github.com/zscaler/zpacloud-playbooks/commit/a23cf4ab41325ee055c3af38948f959c01362ec5))
+* - [PR #2](https://github.com/zscaler/zpacloud-playbooks/pull/2) Added Privileged Remote Access Playbooks 
 
 
 
