@@ -1,0 +1,62 @@
+---
+# zpa_isolation_profile_info.yml - Get details (ID and/or Name) of an cloud browser isolation profile resource.
+#
+# Description
+# ===========
+#
+# Quick example of how to use the 'zpa_isolation_profile_info' module to retrieve a cloud browser isolation profile detail from the ZPA Cloud.
+#
+# This playbook requires proper API credentials to be passed statically or via environment variables connection
+# to the ZPA Cloud 'client_id', 'client_secret', customer_id and 'cloud'. These may be defined as host variables
+# (see `host_vars/zpa_cloud.yml` for an example) or extra vars.
+#
+# Modules Used
+# ============
+#
+# zpa_isolation_profile_info - https://zscaler.github.io/zpacloud-ansible/modules/zpa_isolation_profile_info_module.html
+#
+# Usage
+# =====
+#
+#  $ ansible-playbook zpa_isolation_profile_info.yml
+
+- name: Gather Cloud Browser Isolation (CBI) Profile Details
+  hosts: localhost
+  connection: local
+
+  vars:
+    zpa_cloud:
+      client_id: "{{ client_id }}"
+      client_secret: "{{ client_secret | default(omit) }}"
+      customer_id: "{{ customer_id | default(omit) }}"
+      cloud: "{{ cloud | default(omit) }}"
+
+  tasks:
+    - name: Gather Details of All CBI Profiles
+      zscaler.zpacloud.zpa_isolation_profile_info:
+        provider: "{{ zpa_cloud }}"
+      register: profiles
+
+    - name: All Profiles
+      ansible.builtin.debug:
+        msg: "{{ profiles }}"
+
+    - name: Gather Details of a Specific CBI Profile by Name
+      zscaler.zpacloud.zpa_isolation_profile_info:
+        provider: "{{ zpa_cloud }}"
+        name: CBI_Profile01
+      register: profile_name
+
+    - name: Profile By Name
+      ansible.builtin.debug:
+        msg: "{{ profile_name }}"
+
+    - name: Gather Details of a Specific CBI Profileby ID
+      zscaler.zpacloud.zpa_isolation_profile_info:
+        provider: "{{ zpa_cloud }}"
+        id: "216196257331282583"
+      register: profile_id
+
+    - name: CBI Profile By ID
+      ansible.builtin.debug:
+        msg: "{{ profile_id }}"

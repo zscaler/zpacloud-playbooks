@@ -1,10 +1,10 @@
 ---
-# zpa_ba_certificate_facts.yml - Get details (ID and/or Name) of a browser certificate resource.
+# zpa_ba_certificate_info.yml - Get details (ID and/or Name) of a browser certificate resource.
 #
 # Description
 # ===========
 #
-# Quick example of how to use the 'zpa_ba_certificate_facts' module to retrieve a Browser Certificate details from the ZPA Cloud.
+# Quick example of how to use the 'zpa_ba_certificate_info' module to retrieve a Browser Certificate details from the ZPA Cloud.
 #
 # This playbook requires proper API credentials to be passed statically or via environment variables connection
 # to the ZPA Cloud 'client_id', 'client_secret', customer_id and 'cloud'. These may be defined as host variables
@@ -13,12 +13,12 @@
 # Modules Used
 # ============
 #
-# zpa_ba_certificate_facts - https://zscaler.github.io/zpacloud-ansible/modules/zpa_ba_certificate_facts_module.html
+# zpa_ba_certificate_info - https://zscaler.github.io/zpacloud-ansible/modules/zpa_ba_certificate_info_module.html
 #
 # Usage
 # =====
 #
-#  $ ansible-playbook zpa_ba_certificate_facts.yml
+#  $ ansible-playbook zpa_ba_certificate_info.yml
 
 - name: Gather Details of Browser Access Certificate
   hosts: localhost
@@ -34,7 +34,7 @@
   tasks:
     # Gather All Browser Certificates
     - name: Gather Details of All Browser Certificates
-      zscaler.zpacloud.zpa_ba_certificate_facts:
+      zscaler.zpacloud.zpa_ba_certificate_info:
         provider: "{{ zpa_cloud }}"
       register: certificates
 
@@ -43,7 +43,7 @@
         msg: "{{ certificates }}"
 
     - name: Gather Details of a Specific Browser Certificates by Name
-      zscaler.zpacloud.zpa_ba_certificate_facts:
+      zscaler.zpacloud.zpa_ba_certificate_info:
         provider: "{{ zpa_cloud }}"
         name: server1.example.com
       register: certificate_name
@@ -53,7 +53,7 @@
         msg: "{{ certificate_name }}"
 
     - name: Gather Details of a Specific Browser Certificates by ID
-      zscaler.zpacloud.zpa_ba_certificate_facts:
+      zscaler.zpacloud.zpa_ba_certificate_info:
         provider: "{{ zpa_cloud }}"
         id: "216196257331282583"
       register: certificate_id

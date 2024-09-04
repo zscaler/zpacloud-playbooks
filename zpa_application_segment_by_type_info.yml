@@ -1,0 +1,93 @@
+---
+# zpa_application_segment_by_type_info.yml - Get details (ID and/or Name) of a Application Segment by Type
+#
+# Description
+# ===========
+#
+# Quick examples of how to use the 'zpa_application_segment_by_type_info' module to retrieve a an Application Segment in the ZPA Cloud.
+#
+# This playbook requires proper API credentials to be passed statically or via environment variables connection
+# to the ZPA Cloud 'client_id', 'client_secret', customer_id and 'cloud'. These may be defined as host variables
+# (see `host_vars/zpa_cloud.yml` for an example) or extra vars.
+#
+# Modules Used
+# ============
+#
+# zpa_application_segment_by_type_info - https://zscaler.github.io/zpacloud-ansible/modules/zpa_application_segment_by_type_info_module.html
+#
+# Usage
+# =====
+#
+#  $ ansible-playbook zpa_application_segment_by_type_info.yml
+
+- name: Gather Details of Browser Access Application Segments
+  hosts: localhost
+  connection: local
+
+  vars:
+    zpa_cloud:
+      client_id: "{{ client_id }}"
+      client_secret: "{{ client_secret | default(omit) }}"
+      customer_id: "{{ customer_id | default(omit) }}"
+      cloud: "{{ cloud | default(omit) }}"
+
+  tasks:
+    - name: Get details of a specific BROWSER_ACCESS application segment
+      zscaler.zpacloud.zpa_application_segment_by_type_info:
+        provider: "{{ zpa_cloud }}"
+        application_type: BROWSER_ACCESS
+      register: result
+
+    - name: All BA App Segment Details
+      ansible.builtin.debug:
+        msg: "{{ result }}"
+
+    - name: Gather Specific Browser Access Application Segment By Name
+      zscaler.zpacloud.zpa_application_segment_by_type_info:
+        name: BA_App_Segment_Name
+        application_type: BROWSER_ACCESS
+      register: ba01_result_name
+
+    - name: BA App Segment Details By Name
+      ansible.builtin.debug:
+        msg: "{{ ba01_result_name }}"
+
+    - name: Get details of a specific INSPECT application segment
+      zscaler.zpacloud.zpa_application_segment_by_type_info:
+        provider: "{{ zpa_cloud }}"
+        application_type: INSPECT
+      register: result
+
+    - name: All Inspect App Segment Details
+      ansible.builtin.debug:
+        msg: "{{ result }}"
+
+    - name: Gather Specific Inspect Application Segment By Name
+      zscaler.zpacloud.zpa_application_segment_by_type_info:
+        name: Inspect_App_Segment_Name
+        application_type: INSPECT
+      register: inspect01_result_name
+
+    - name: Inspect App Segment Details By Name
+      ansible.builtin.debug:
+        msg: "{{ inspect01_result_name }}"
+
+    - name: Get details of a specific SECURE_REMOTE_ACCESS application segment
+      zscaler.zpacloud.zpa_application_segment_by_type_info:
+        provider: "{{ zpa_cloud }}"
+        application_type: SECURE_REMOTE_ACCESS
+      register: result
+
+    - name: All PRA App Segment Details
+      ansible.builtin.debug:
+        msg: "{{ result }}"
+
+    - name: Gather Specific PRA Application Segment By Name
+      zscaler.zpacloud.zpa_application_segment_by_type_info:
+        name: PRA_App_Segment_Name
+        application_type: SECURE_REMOTE_ACCESS
+      register: pra01_result_name
+
+    - name: PRA App Segment Details By Name
+      ansible.builtin.debug:
+        msg: "{{ pra01_result_name }}"

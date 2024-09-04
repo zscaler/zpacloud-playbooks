@@ -1,10 +1,10 @@
 ---
-# zpa_scim_attribute_header_facts.yml - Get details (ID and/or Name) of a SCIM Attribute Header resource.
+# zpa_scim_attribute_header_info.yml - Get details (ID and/or Name) of a SCIM Attribute Header resource.
 #
 # Description
 # ===========
 #
-# Quick example of how to use the 'zpa_scim_attribute_header_facts' module to retrieve a SCIM Attribute Header
+# Quick example of how to use the 'zpa_scim_attribute_header_info' module to retrieve a SCIM Attribute Header
 # details from the ZPA Cloud.
 #
 # This playbook requires proper API credentials to be passed statically or via environment variables connection
@@ -16,12 +16,12 @@
 # Modules Used
 # ============
 #
-# zpa_scim_attribute_header_facts - https://zscaler.github.io/zpacloud-ansible/modules/zpa_scim_attribute_header_facts_module.html
+# zpa_scim_attribute_header_info - https://zscaler.github.io/zpacloud-ansible/modules/zpa_scim_attribute_header_info_module.html
 #
 # Usage
 # =====
 #
-#  $ ansible-playbook zpa_scim_attribute_header_facts.yml
+#  $ ansible-playbook zpa_scim_attribute_header_info.yml
 
 - name: Gather SCIM Attribute Header Details
   hosts: localhost
@@ -37,7 +37,7 @@
   tasks:
     # Gather all SCIM Attribute Header Info
     - name: Gather Details of All SCIM Attribute Headers
-      zscaler.zpacloud.zpa_scim_attribute_header_facts:
+      zscaler.zpacloud.zpa_scim_attribute_header_info:
         provider: "{{ zpa_cloud }}"
         idp_name: IdP_Name
       register: scim_attributes
@@ -48,7 +48,7 @@
 
     # Gather Specific SCIM Attribute Header Info By Name
     - name: Gather Details of a Specific SCIM Attribute Header by Name
-      zscaler.zpacloud.zpa_scim_attribute_header_facts:
+      zscaler.zpacloud.zpa_scim_attribute_header_info:
         provider: "{{ zpa_cloud }}"
         idp_name: IdP_Name
         name: costCenter
@@ -60,7 +60,7 @@
 
     # Gather Specific SCIM Attribute Header Info By ID
     - name: Gather Details of a Specific SCIM Attribute Header by ID
-      zscaler.zpacloud.zpa_scim_attribute_header_facts:
+      zscaler.zpacloud.zpa_scim_attribute_header_info:
         provider: "{{ zpa_cloud }}"
         idp_name: IdP_Name
         id: "216196257331285842"

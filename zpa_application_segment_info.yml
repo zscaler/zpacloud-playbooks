@@ -1,10 +1,10 @@
 ---
-# zpa_application_segment_facts.yml - Get details (ID and/or Name) of a Application Segment.
+# zpa_application_segment_info.yml - Get details (ID and/or Name) of a Application Segment.
 #
 # Description
 # ===========
 #
-# Quick examples of how to use the 'zpa_application_segment_facts' module to retrieve  details of an Application Segment in the ZPA Cloud.
+# Quick examples of how to use the 'zpa_application_segment_info' module to retrieve  details of an Application Segment in the ZPA Cloud.
 #
 # This playbook requires proper API credentials to be passed statically or via environment variables connection
 # to the ZPA Cloud 'client_id', 'client_secret', customer_id and 'cloud'. These may be defined as host variables
@@ -13,12 +13,12 @@
 # Modules Used
 # ============
 #
-# zpa_application_segment_facts - https://zscaler.github.io/zpacloud-ansible/modules/zpa_application_segment_facts_module.html
+# zpa_application_segment_info - https://zscaler.github.io/zpacloud-ansible/modules/zpa_application_segment_info_module.html
 #
 # Usage
 # =====
 #
-#  $ ansible-playbook zpa_application_segment_facts.yml
+#  $ ansible-playbook zpa_application_segment_info.yml
 
 - name: Gather Details of Application Segments
   hosts: localhost
@@ -33,16 +33,16 @@
 
   tasks:
     - name: Gather Details of All Application Segments
-      zscaler.zpacloud.zpa_application_segment_facts:
+      zscaler.zpacloud.zpa_application_segment_info:
         provider: "{{ zpa_cloud }}"
-      register: result
+      register: all_app_segments
 
     - name: All App Segment Details
       ansible.builtin.debug:
         msg: "{{ all_app_segments }}"
 
     - name: Gather Details of a Specific Application Segments by Name
-      zscaler.zpacloud.zpa_application_segment_facts:
+      zscaler.zpacloud.zpa_application_segment_info:
         provider: "{{ zpa_cloud }}"
         name: App_Segment_Name
       register: result_name
@@ -52,10 +52,10 @@
         msg: "{{ result_name }}"
 
     - name: Gather Details of a Specific Application Segments by ID
-      zscaler.zpacloud.zpa_application_segment_facts:
+      zscaler.zpacloud.zpa_application_segment_info:
         provider: "{{ zpa_cloud }}"
         id: "12345678910"
-      register: result_id
+      register: app_segment_id
 
     - name: App Segment Details By ID
       ansible.builtin.debug:

@@ -41,14 +41,14 @@
   tasks:
     # Retrieve App Connector Group ID
     - name: LSS App Connector Group
-      zscaler.zpacloud.zpa_app_connector_group_facts:
+      zscaler.zpacloud.zpa_app_connector_group_info:
         provider: "{{ zpa_cloud }}"
         name: LSS App Connector Group
       register: lss_app_connector
 
     # Retrieve LSS Log Types Format
     - name: Gather LSS Log types formats
-      zscaler.zpacloud.zpa_lss_config_log_types_formats_facts:
+      zscaler.zpacloud.zpa_lss_config_log_types_formats_info:
         provider: "{{ zpa_cloud }}"
         log_type: zpn_ast_auth_log
       register: zpn_ast_auth_log
@@ -70,7 +70,7 @@
 
     # Retrieve LSS Log Types Format
     - name: Gather LSS Log types formats
-      zscaler.zpacloud.zpa_lss_config_log_types_formats_facts:
+      zscaler.zpacloud.zpa_lss_config_log_types_formats_info:
         provider: "{{ zpa_cloud }}"
         log_type: zpn_trans_log
       register: zpn_trans_log

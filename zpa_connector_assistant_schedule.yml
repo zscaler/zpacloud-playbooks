@@ -1,0 +1,46 @@
+---
+# zpa_connector_assistant_schedule_.yml - Configures Auto Delete for the specified disconnected App Connector.
+#
+# Description
+# ===========
+#
+# Quick example of how to use the 'zpa_connector_assistant_schedule_' module to configures Auto Delete for the specified disconnected App Connector.
+#
+# This playbook requires proper API credentials to be passed statically or via environment variables connection
+# to the ZPA Cloud 'client_id', 'client_secret', customer_id and 'cloud'. These may be defined as host variables
+# (see `host_vars/zpa_cloud.yml` for an example) or extra vars.
+#
+# Modules Used
+# ============
+#
+# zpa_connector_assistant_schedule_ - https://zscaler.github.io/zpacloud-ansible/modules/zpa_connector_assistant_schedule_module.html
+#
+# Usage
+# =====
+#
+#  $ ansible-playbook zpa_connector_assistant_schedule_.yml
+
+- name: Enable or Update Auto Delete for disconnected App Connector
+  hosts: localhost
+  connection: local
+
+  vars:
+    zpa_cloud:
+      client_id: "{{ client_id }}"
+      client_secret: "{{ client_secret | default(omit) }}"
+      customer_id: "{{ customer_id | default(omit) }}"
+      cloud: "{{ cloud | default(omit) }}"
+
+  tasks:
+    - name: Configure Auto Delete for disconnected App Connector
+      zscaler.zpacloud.zpa_connector_assistant_schedule:
+        provider: '{{ zpa_cloud }}'
+        customer_id: "1234567895452"
+        enabled: true
+        delete_disabled: true
+        frequency: "days"
+        frequency_interval: "5"
+
+    - name: All Schedule Result
+      ansible.builtin.debug:
+        msg: "{{ result }}"

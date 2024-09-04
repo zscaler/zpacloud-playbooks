@@ -1,10 +1,10 @@
 ---
-# zpa_policy_forwarding_rule_facts.yml - Create/Update/Delete a Policy Forwarding Rule.
+# zpa_policy_forwarding_rule_info.yml - Create/Update/Delete a Policy Forwarding Rule.
 #
 # Description
 # ===========
 #
-# Quick example of how to use the 'zpa_policy_forwarding_rule_facts' module to create a Policy Forwarding Rule in the ZPA Cloud.
+# Quick example of how to use the 'zpa_policy_forwarding_rule_info' module to create a Policy Forwarding Rule in the ZPA Cloud.
 #
 # This playbook requires proper API credentials to be passed statically or via environment variables connection
 # to the ZPA Cloud 'client_id', 'client_secret', customer_id and 'cloud'. These may be defined as host variables
@@ -13,12 +13,12 @@
 # Modules Used
 # ============
 #
-# zpa_policy_forwarding_rule_facts - https://zscaler.github.io/zpacloud-ansible/modules/zpa_policy_forwarding_rule_facts_module.html
+# zpa_policy_forwarding_rule_info - https://zscaler.github.io/zpacloud-ansible/modules/zpa_policy_forwarding_rule_info_module.html
 #
 # Usage
 # =====
 #
-#  $ ansible-playbook zpa_policy_forwarding_rule_facts.yml
+#  $ ansible-playbook zpa_policy_forwarding_rule_info.yml
 
 - name: Gather Policy Access Forwarding Rule Details
   hosts: localhost
@@ -33,7 +33,7 @@
 
   tasks:
     - name: Gather All Forwarding Policy
-      zscaler.zpacloud.zpa_policy_access_forwarding_rule_facts:
+      zscaler.zpacloud.zpa_policy_access_forwarding_rule_info:
         provider: "{{ zpa_cloud }}"
       register: forwarding_rules
 
@@ -43,7 +43,7 @@
 
     # Gather Specific Forwarding Policy Info By Name
     - name: Forwarding Policy By Name
-      zscaler.zpacloud.zpa_policy_access_forwarding_rule_facts:
+      zscaler.zpacloud.zpa_policy_access_forwarding_rule_info:
         provider: "{{ zpa_cloud }}"
         name: CRM_Example
       register: forwarding_rule_name
@@ -54,7 +54,7 @@
 
     # Gather Specific Forwarding Policy Info By ID
     - name: Forwarding Policy By ID
-      zscaler.zpacloud.zpa_policy_access_forwarding_rule_facts:
+      zscaler.zpacloud.zpa_policy_access_forwarding_rule_info:
         provider: "{{ zpa_cloud }}"
         id: "216196257331282583"
       register: forwarding_rule_id

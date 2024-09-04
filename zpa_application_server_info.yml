@@ -1,10 +1,10 @@
 ---
-# zpa_application_server_facts.yml - Get details (ID and/or Name) of a Application Server.
+# zpa_application_server_info.yml - Get details (ID and/or Name) of a Application Server.
 #
 # Description
 # ===========
 #
-# Quick examples of how to use the 'zpa_application_server_facts' module to retrieve  details of an Application Server in the ZPA Cloud.
+# Quick examples of how to use the 'zpa_application_server_info' module to retrieve  details of an Application Server in the ZPA Cloud.
 #
 # This playbook requires proper API credentials to be passed statically or via environment variables connection
 # to the ZPA Cloud 'client_id', 'client_secret', customer_id and 'cloud'. These may be defined as host variables
@@ -13,12 +13,12 @@
 # Modules Used
 # ============
 #
-# zpa_application_server_facts - https://zscaler.github.io/zpacloud-ansible/modules/zpa_application_server_facts_module.html
+# zpa_application_server_info - https://zscaler.github.io/zpacloud-ansible/modules/zpa_application_server_info_module.html
 #
 # Usage
 # =====
 #
-#  $ ansible-playbook zpa_application_server_facts.yml
+#  $ ansible-playbook zpa_application_server_info.yml
 
 - name: Gather Details of Application Servers
   hosts: localhost
@@ -34,7 +34,7 @@
   tasks:
     # Gather All Application Servers
     - name: Gather Information Details of All Application Servers
-      zscaler.zpacloud.zpa_application_server_facts:
+      zscaler.zpacloud.zpa_application_server_info:
         provider: "{{ zpa_cloud }}"
       register: all_app_servers
 
@@ -43,7 +43,7 @@
         msg: "{{ all_app_servers }}"
 
     - name: Gather Information Details of an Application Server by Name
-      zscaler.zpacloud.zpa_application_server_facts:
+      zscaler.zpacloud.zpa_application_server_info:
         provider: "{{ zpa_cloud }}"
         name: server1.acme.com
       register: app_server_name
@@ -54,7 +54,7 @@
 
     # Gather Application Server by ID
     - name: Gather Information Details of an Application Server by ID
-      zscaler.zpacloud.zpa_application_server_facts:
+      zscaler.zpacloud.zpa_application_server_info:
         provider: "{{ zpa_cloud }}"
         id: "216196257331291921"
       register: app_server_id
