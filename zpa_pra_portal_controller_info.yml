@@ -44,7 +44,7 @@
     - name: Get Details of a PRA Portal by Name
       zscaler.zpacloud.zpa_pra_portal_controller_info:
         provider: "{{ zpa_cloud }}"
-        name: "Example"
+        name: Example
       register: portal_name
 
     - name: PRA Portal Details By Name

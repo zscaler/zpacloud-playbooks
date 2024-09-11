@@ -33,7 +33,8 @@
 
   tasks:
     - name: Create App Connector Group
-      zscaler.zpacloud.zpa_app_connector_groups:
+      register: app_connector_group_id
+      willguibr.zpacloud.zpa_app_connector_groups:
         provider: "{{ zpa_cloud }}"
         name: App Connector Group One
         description: App Connector Group One
@@ -47,10 +48,10 @@
         upgrade_time_in_secs: "66600"
         override_version_profile: true
         version_profile_id: "0"
-      register: app_connector_group_id
 
     - name: Create Server Group
-      zscaler.zpacloud.zpa_server_group:
+      register: server_group_id
+      willguibr.zpacloud.zpa_server_group:
         provider: "{{ zpa_cloud }}"
         name: Server Group One
         description: Server Group One
@@ -58,20 +59,19 @@
         dynamic_discovery: true
         app_connector_group_ids:
           - "{{ app_connector_group_id.data.id }}"
-      register: server_group_id
 
     - name: Create Segment Group
-      zscaler.zpacloud.zpa_segment_group:
+      register: segment_group_id
+      willguibr.zpacloud.zpa_segment_group:
         provider: "{{ zpa_cloud }}"
         name: Segment Group One
         description: Segment Group One
-      register: segment_group_id
 
     - name: Gather Details of a Specific Browser Certificates by Name
-      zscaler.zpacloud.zpa_ba_certificate_info:
+      register: certificate_name_01
+      willguibr.zpacloud.zpa_ba_certificate_info:
         provider: "{{ zpa_cloud }}"
         name: sales.bd-hashicorp.com
-      register: certificate_name_01
 
     - name: Browser Access Application Segment
       zscaler.zpacloud.zpa_application_segment_browser_access:

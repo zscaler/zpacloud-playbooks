@@ -37,10 +37,10 @@
   tasks:
     # Gather all SCIM Attribute Header Info
     - name: Gather Details of All SCIM Attribute Headers
-      zscaler.zpacloud.zpa_scim_attribute_header_info:
+      register: scim_attributes
+      willguibr.zpacloud.zpa_scim_attribute_header_info:
         provider: "{{ zpa_cloud }}"
         idp_name: IdP_Name
-      register: scim_attributes
 
     - name: All SCIM Attribute Headers
       ansible.builtin.debug:
@@ -48,11 +48,11 @@
 
     # Gather Specific SCIM Attribute Header Info By Name
     - name: Gather Details of a Specific SCIM Attribute Header by Name
-      zscaler.zpacloud.zpa_scim_attribute_header_info:
+      register: scim_attribute_name
+      willguibr.zpacloud.zpa_scim_attribute_header_info:
         provider: "{{ zpa_cloud }}"
         idp_name: IdP_Name
         name: costCenter
-      register: scim_attribute_name
 
     - name: SCIM Attribute Header by Name
       ansible.builtin.debug:
@@ -60,11 +60,11 @@
 
     # Gather Specific SCIM Attribute Header Info By ID
     - name: Gather Details of a Specific SCIM Attribute Header by ID
-      zscaler.zpacloud.zpa_scim_attribute_header_info:
+      register: scim_attribute_id
+      willguibr.zpacloud.zpa_scim_attribute_header_info:
         provider: "{{ zpa_cloud }}"
         idp_name: IdP_Name
         id: "216196257331285842"
-      register: scim_attribute_id
 
     - name: SCIM Attribute Header by ID
       ansible.builtin.debug:

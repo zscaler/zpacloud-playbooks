@@ -34,27 +34,27 @@
   tasks:
     - name: Create PRA Approval
       zscaler.zpacloud.zpa_pra_approval:
-        provider: '{{ zpa_cloud }}'
+        provider: "{{ zpa_cloud }}"
         state: present
         email_ids:
-          - 'jdoe@example.com'
-        start_time: 'Thu, 09 May 2024 8:00:00 PST'
-        end_time: 'Mon, 10 Jun 2024 5:00:00 PST'
+          - jdoe@example.com
+        start_time: Thu, 09 May 2024 8:00:00 PST
+        end_time: Mon, 10 Jun 2024 5:00:00 PST
         application_ids:
-          - '216199618143356658'
-          - '216199618143356661'
+          - "216199618143356658"
+          - "216199618143356661"
         working_hours:
           days:
-            - 'FRI'
-            - 'MON'
-            - 'SAT'
-            - 'SUN'
-            - 'THU'
-            - 'TUE'
-            - 'WED'
-          start_time: '09:00'
-          end_time: '17:00'
-          start_time_cron: '0 0 16 ? * MON,TUE,WED,THU,FRI,SAT,SUN'
-          end_time_cron: '0 0 0 ? * MON,TUE,WED,THU,FRI,SAT,SUN'
-          time_zone: 'America/Vancouver'
+            - FRI
+            - MON
+            - SAT
+            - SUN
+            - THU
+            - TUE
+            - WED
+          start_time: "09:00"
+          end_time: "17:00"
+          start_time_cron: "0 0 16 ? * MON,TUE,WED,THU,FRI,SAT,SUN"
+          end_time_cron: "0 0 0 ? * MON,TUE,WED,THU,FRI,SAT,SUN"
+          time_zone: America/Vancouver
       register: result

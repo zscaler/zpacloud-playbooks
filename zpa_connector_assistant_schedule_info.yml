@@ -44,7 +44,7 @@
     - name: Gather Details of Assistant Schedules by ID
       zscaler.zpacloud.zpa_connector_assistant_schedule_info:
         provider: "{{ zpa_cloud }}"
-        id: '1'
+        id: "1"
       register: result
 
     - name: Schedule by ID

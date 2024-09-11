@@ -33,7 +33,7 @@
 
   tasks:
     - name: Create App Connector Group
-      zscaler.zpacloud.zpa_app_connector_groups:
+      willguibr.zpacloud.zpa_app_connector_groups:
         provider: "{{ zpa_cloud }}"
         name: App_Connector_Group_One
         description: App_Connector_Group_One
@@ -50,7 +50,7 @@
         dns_query_type: IPV4_IPV6
 
     - name: Create App Connector Group Provisioning Key
-      zscaler.zpacloud.zpa_provisioning_key:
+      willguibr.zpacloud.zpa_provisioning_key:
         provider: "{{ zpa_cloud }}"
         name: App Connector Group Provisioning Key
         key_type: connector

@@ -33,20 +33,6 @@
 
   tasks:
     - name: Create/Update/Delete App Connector Group
-      zscaler.zpacloud.zpa_app_connector_groups:
-        provider: "{{ zpa_cloud }}"
-        name: "{{ item.name }}"
-        description: "{{ item.description }}"
-        enabled: "{{ item.enabled }}"
-        city_country: "{{ item.city_country }}"
-        country_code: "{{ item.country_code }}"
-        latitude: "{{ item.latitude }}"
-        longitude: "{{ item.longitude }}"
-        location: "{{ item.location }}"
-        upgrade_day: "{{ item.upgrade_day }}"
-        override_version_profile: "{{ item.override_version_profile }}"
-        version_profile_id: "{{ item.version_profile_id }}"
-        dns_query_type: "{{ item.dns_query_type }}"
       with_items:
         - name: app_connector_group01
           description: app_connector_group01
@@ -84,3 +70,17 @@
           dns_query_type: IPV4_IPV6
           override_version_profile: true
           version_profile_id: "0"
+      willguibr.zpacloud.zpa_app_connector_groups:
+        provider: "{{ zpa_cloud }}"
+        name: "{{ item.name }}"
+        description: "{{ item.description }}"
+        enabled: "{{ item.enabled }}"
+        city_country: "{{ item.city_country }}"
+        country_code: "{{ item.country_code }}"
+        latitude: "{{ item.latitude }}"
+        longitude: "{{ item.longitude }}"
+        location: "{{ item.location }}"
+        upgrade_day: "{{ item.upgrade_day }}"
+        override_version_profile: "{{ item.override_version_profile }}"
+        version_profile_id: "{{ item.version_profile_id }}"
+        dns_query_type: "{{ item.dns_query_type }}"

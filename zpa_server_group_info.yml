@@ -34,29 +34,29 @@
 
   tasks:
     - name: Gather Details of All Server Groups
-      zscaler.zpacloud.zpa_server_group_info:
-        provider: "{{ zpa_cloud }}"
       register: server_groups
+      willguibr.zpacloud.zpa_server_group_info:
+        provider: "{{ zpa_cloud }}"
 
     - name: All Server Groups
       ansible.builtin.debug:
         msg: "{{ server_groups }}"
 
     - name: Gather Details of All Server Groups by Name
-      zscaler.zpacloud.zpa_server_group_info:
+      register: server_group_name
+      willguibr.zpacloud.zpa_server_group_info:
         provider: "{{ zpa_cloud }}"
         name: Example
-      register: server_group_name
 
     - name: Server Groups by Name
       ansible.builtin.debug:
         msg: "{{ server_group_name }}"
 
     - name: Gather Details of All Server Groups by ID
-      zscaler.zpacloud.zpa_server_group_info:
+      register: server_group_id
+      willguibr.zpacloud.zpa_server_group_info:
         provider: "{{ zpa_cloud }}"
         id: "216196257331291969"
-      register: server_group_id
 
     - name: Server Groups by ID
       ansible.builtin.debug:

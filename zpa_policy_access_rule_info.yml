@@ -33,29 +33,29 @@
 
   tasks:
     - name: Gather Details of All Policy Access Rules
-      zscaler.zpacloud.zpa_policy_access_rule_info:
-        provider: "{{ zpa_cloud }}"
       register: access_rules
+      willguibr.zpacloud.zpa_policy_access_rule_info:
+        provider: "{{ zpa_cloud }}"
 
     - name: All Access Rules
       ansible.builtin.debug:
         msg: "{{ access_rules }}"
 
     - name: Policy Access Rule By Name
-      zscaler.zpacloud.zpa_policy_access_rule_info:
+      register: access_rule_name
+      willguibr.zpacloud.zpa_policy_access_rule_info:
         provider: "{{ zpa_cloud }}"
         name: Rule 1
-      register: access_rule_name
 
     - name: Access Rule By Name
       ansible.builtin.debug:
         msg: "{{ access_rule_name }}"
 
     - name: Policy Access Rule By ID
-      zscaler.zpacloud.zpa_policy_access_rule_info:
+      register: access_rule_id
+      willguibr.zpacloud.zpa_policy_access_rule_info:
         provider: "{{ zpa_cloud }}"
         id: "216196257331282583"
-      register: access_rule_id
 
     - name: Access Rule By ID
       ansible.builtin.debug:
