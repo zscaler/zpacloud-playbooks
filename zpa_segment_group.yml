@@ -33,10 +33,12 @@
 
   tasks:
     - name: Create a Segment Group
-      zscaler.zpacloud.zpa_segment_group:
+      with_items:
+        - name: Segment_Group_One
+          description: Segment_Group_One
+          enabled: true
+      willguibr.zpacloud.zpa_segment_group:
         provider: "{{ zpa_cloud }}"
         name: "{{ item.name }}"
         description: "{{ item.description }}"
         enabled: "{{ item.enabled }}"
-      with_items:
-        - { name: Segment_Group_One, description: Segment_Group_One, enabled: true }

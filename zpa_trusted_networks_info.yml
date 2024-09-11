@@ -36,9 +36,9 @@
   tasks:
     # Gather all Trusted Network Info
     - name: Gather Details of All Trusted Networks
-      zscaler.zpacloud.zpa_trusted_networks_info:
-        provider: "{{ zpa_cloud }}"
       register: trusted_networks
+      willguibr.zpacloud.zpa_trusted_networks_info:
+        provider: "{{ zpa_cloud }}"
 
     - name: All Trusted Networks
       ansible.builtin.debug:
@@ -46,10 +46,10 @@
 
     # Gather Specific Trusted Network Info By Name
     - name: Gather Details of a Specific Trusted Network by Name
-      zscaler.zpacloud.zpa_trusted_networks_info:
+      register: trusted_network_name
+      willguibr.zpacloud.zpa_trusted_networks_info:
         provider: "{{ zpa_cloud }}"
         name: Corp-Trusted-Networks
-      register: trusted_network_name
 
     - name: Trusted Networks by Name
       ansible.builtin.debug:
@@ -57,10 +57,10 @@
 
     # Gather Specific Trusted Network Info By ID
     - name: Gather Details of a Specific Trusted Network by ID
-      zscaler.zpacloud.zpa_trusted_networks_info:
+      register: trusted_network_id
+      willguibr.zpacloud.zpa_trusted_networks_info:
         provider: "{{ zpa_cloud }}"
         id: "216196257331282583"
-      register: trusted_network_id
 
     - name: Trusted Network by ID
       ansible.builtin.debug:

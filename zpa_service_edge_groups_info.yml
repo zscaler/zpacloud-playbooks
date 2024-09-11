@@ -34,29 +34,29 @@
 
   tasks:
     - name: Gather Detail Information of All Service Edge Groups
-      zscaler.zpacloud.zpa_service_edge_groups:
-        provider: "{{ zpa_cloud }}"
       register: service_edge_groups
+      willguibr.zpacloud.zpa_service_edge_groups:
+        provider: "{{ zpa_cloud }}"
 
     - name: All Service Edge Groups
       ansible.builtin.debug:
         msg: "{{ service_edge_groups }}"
 
     - name: Gather Details of All Service Edge Groups by Name
-      zscaler.zpacloud.zpa_service_edge_groups:
+      register: service_edge_group_name
+      willguibr.zpacloud.zpa_service_edge_groups:
         provider: "{{ zpa_cloud }}"
         name: Example
-      register: service_edge_group_name
 
     - name: Service Edge Groups by Name
       ansible.builtin.debug:
         msg: "{{ service_edge_group_name }}"
 
     - name: Gather Details of All Service Edge Groups by ID
-      zscaler.zpacloud.zpa_service_edge_groups:
+      register: service_edge_group_id
+      willguibr.zpacloud.zpa_service_edge_groups:
         provider: "{{ zpa_cloud }}"
         id: "216196257331291969"
-      register: service_edge_group_id
 
     - name: Service Edge Groups by ID
       ansible.builtin.debug:

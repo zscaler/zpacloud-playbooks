@@ -34,11 +34,11 @@
   tasks:
     - name: Configure Auto Delete for disconnected App Connector
       zscaler.zpacloud.zpa_connector_assistant_schedule:
-        provider: '{{ zpa_cloud }}'
+        provider: "{{ zpa_cloud }}"
         customer_id: "1234567895452"
         enabled: true
         delete_disabled: true
-        frequency: "days"
+        frequency: days
         frequency_interval: "5"
 
     - name: All Schedule Result

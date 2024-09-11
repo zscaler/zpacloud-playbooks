@@ -33,23 +33,6 @@
 
   tasks:
     - name: Create/Update/Delete Service Edge Group
-      zscaler.zpacloud.zpa_service_edge_groups:
-        provider: "{{ zpa_cloud }}"
-        name: "{{ item.name }}"
-        description: "{{ item.description }}"
-        enabled: "{{ item.enabled }}"
-        city_country: "{{ item.city_country }}"
-        country_code: "{{ item.country_code }}"
-        latitude: "{{ item.latitude }}"
-        longitude: "{{ item.longitude }}"
-        location: "{{ item.location }}"
-        is_public: "{{ item.is_public }}"
-        upgrade_day: "{{ item.upgrade_day }}"
-        override_version_profile: "{{ item.override_version_profile }}"
-        version_profile_id: "{{ item.version_profile_id }}"
-        grace_distance_enabled: "{{ item.grace_distance_enabled }}"
-        grace_distance_value: "{{ item.grace_distance_value }}"
-        grace_distance_value_unit: "{{ item.grace_distance_value_unit }}"
       with_items:
         - name: service_edge_group01
           description: service_edge_group01
@@ -66,7 +49,6 @@
           grace_distance_enabled: true
           grace_distance_value: "10.0"
           grace_distance_value_unit: MILES
-
         - name: service_edge_group02
           description: service_edge_group02
           enabled: true
@@ -82,7 +64,6 @@
           grace_distance_enabled: true
           grace_distance_value: "10.0"
           grace_distance_value_unit: MILES
-
         - name: service_edge_group03
           description: service_edge_group03
           enabled: true
@@ -98,3 +79,20 @@
           grace_distance_enabled: true
           grace_distance_value: "10.0"
           grace_distance_value_unit: MILES
+      willguibr.zpacloud.zpa_service_edge_groups:
+        provider: "{{ zpa_cloud }}"
+        name: "{{ item.name }}"
+        description: "{{ item.description }}"
+        enabled: "{{ item.enabled }}"
+        city_country: "{{ item.city_country }}"
+        country_code: "{{ item.country_code }}"
+        latitude: "{{ item.latitude }}"
+        longitude: "{{ item.longitude }}"
+        location: "{{ item.location }}"
+        is_public: "{{ item.is_public }}"
+        upgrade_day: "{{ item.upgrade_day }}"
+        override_version_profile: "{{ item.override_version_profile }}"
+        version_profile_id: "{{ item.version_profile_id }}"
+        grace_distance_enabled: "{{ item.grace_distance_enabled }}"
+        grace_distance_value: "{{ item.grace_distance_value }}"
+        grace_distance_value_unit: "{{ item.grace_distance_value_unit }}"
