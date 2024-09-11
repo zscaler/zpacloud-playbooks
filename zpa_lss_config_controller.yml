@@ -48,15 +48,14 @@
 
     # Retrieve LSS Log Types Format
     - name: Gather LSS Log types formats
-      register: zpn_ast_auth_log
-
-      # Create LSS Configuration
-      willguibr.zpacloud.zpa_lss_config_log_types_formats_info:
+      zscaler.zpacloud.zpa_lss_config_log_types_formats_info:
         provider: "{{ zpa_cloud }}"
         log_type: zpn_ast_auth_log
+      register: zpn_ast_auth_log
 
+    # Create LSS Configuration
     - name: LSS Audit Logs
-      willguibr.zpacloud.zpa_lss_config_controller:
+      zscaler.zpacloud.zpa_lss_config_controller:
         provider: "{{ zpa_cloud }}"
         config:
           name: LSS Audit Logs
@@ -69,16 +68,16 @@
         connector_groups:
           - id: "{{ lss_app_connector.data[0].id }}"
 
+    # Retrieve LSS Log Types Format
     - name: Gather LSS Log types formats
-      register: zpn_trans_log
-
-      # Create LSS Configuration
-      willguibr.zpacloud.zpa_lss_config_log_types_formats_info:
+      zscaler.zpacloud.zpa_lss_config_log_types_formats_info:
         provider: "{{ zpa_cloud }}"
         log_type: zpn_trans_log
+      register: zpn_trans_log
 
+    # Create LSS Configuration
     - name: LSS User Activity
-      willguibr.zpacloud.zpa_lss_config_controller:
+      zscaler.zpacloud.zpa_lss_config_controller:
         provider: "{{ zpa_cloud }}"
         config:
           name: LSS User Activity

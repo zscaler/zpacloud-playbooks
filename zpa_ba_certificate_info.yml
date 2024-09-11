@@ -34,29 +34,29 @@
   tasks:
     # Gather All Browser Certificates
     - name: Gather Details of All Browser Certificates
-      register: certificates
-      willguibr.zpacloud.zpa_ba_certificate_info:
+      zscaler.zpacloud.zpa_ba_certificate_info:
         provider: "{{ zpa_cloud }}"
+      register: certificates
 
     - name: All Browser Certificates
       ansible.builtin.debug:
         msg: "{{ certificates }}"
 
     - name: Gather Details of a Specific Browser Certificates by Name
-      register: certificate_name
-      willguibr.zpacloud.zpa_ba_certificate_info:
+      zscaler.zpacloud.zpa_ba_certificate_info:
         provider: "{{ zpa_cloud }}"
         name: server1.example.com
+      register: certificate_name
 
     - name: Certificates by Name
       ansible.builtin.debug:
         msg: "{{ certificate_name }}"
 
     - name: Gather Details of a Specific Browser Certificates by ID
-      register: certificate_id
-      willguibr.zpacloud.zpa_ba_certificate_info:
+      zscaler.zpacloud.zpa_ba_certificate_info:
         provider: "{{ zpa_cloud }}"
         id: "216196257331282583"
+      register: certificate_id
 
     - name: Certificates by ID
       ansible.builtin.debug:

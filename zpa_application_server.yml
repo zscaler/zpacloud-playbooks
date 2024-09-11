@@ -33,19 +33,13 @@
 
   tasks:
     - name: Create Application Servers
-      with_items:
-        - name: Server_One
-          description: Server_One
-          address: 1.1.1.1
-        - name: Server_Two
-          description: Server_Two
-          address: 2.2.2.2
-        - name: Server_Three
-          description: Server_Three
-          address: 3.3.3.3
-      willguibr.zpacloud.zpa_application_server:
+      zscaler.zpacloud.zpa_application_server:
         provider: "{{ zpa_cloud }}"
         name: "{{ item.name }}"
         description: "{{ item.description }}"
         address: "{{ item.address }}"
         enabled: true
+      with_items:
+        - { name: Server_One, description: Server_One, address: 1.1.1.1 }
+        - { name: Server_Two, description: Server_Two, address: 2.2.2.2 }
+        - { name: Server_Three, description: Server_Three, address: 3.3.3.3 }
