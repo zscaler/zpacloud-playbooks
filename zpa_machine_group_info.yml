@@ -33,29 +33,29 @@
 
   tasks:
     - name: Gather Details of All Machine Groups
-      zscaler.zpacloud.zpa_machine_group_info:
-        provider: "{{ zpa_cloud }}"
       register: machine_groups
+      willguibr.zpacloud.zpa_machine_group_info:
+        provider: "{{ zpa_cloud }}"
 
     - name: All Machine Groups
       ansible.builtin.debug:
         msg: "{{ machine_groups }}"
 
     - name: Gather Details of a Specific Machine Group by Name
-      zscaler.zpacloud.zpa_machine_group_info:
+      register: machine_group_name
+      willguibr.zpacloud.zpa_machine_group_info:
         provider: "{{ zpa_cloud }}"
         name: Group 1
-      register: machine_group_name
 
     - name: Machine Group by Name
       ansible.builtin.debug:
         msg: "{{ machine_group_name }}"
 
     - name: Gather Details of a Specific Machine Group by ID
-      zscaler.zpacloud.zpa_machine_group_info:
+      register: machine_group_id
+      willguibr.zpacloud.zpa_machine_group_info:
         provider: "{{ zpa_cloud }}"
         id: "216196257331282583"
-      register: machine_group_id
 
     - name: Machine Group by ID
       ansible.builtin.debug:

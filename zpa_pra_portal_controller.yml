@@ -33,19 +33,19 @@
 
   tasks:
     - name: Gather Details of a Specific Browser Certificates by Name
-      zscaler.zpacloud.zpa_ba_certificate_info:
-        provider: '{{ zpa_cloud }}'
-        name: 'portal.acme.com'
       register: cert_name
+      willguibr.zpacloud.zpa_ba_certificate_info:
+        provider: "{{ zpa_cloud }}"
+        name: portal.acme.com
 
     - name: Create/Update/Delete PRA Portal
       zscaler.zpacloud.zpa_pra_portal_controller:
-        provider: '{{ zpa_cloud }}'
-        name: 'portal.acme.com'
-        description: 'PRA Portal'
+        provider: "{{ zpa_cloud }}"
+        name: portal.acme.com
+        description: PRA Portal
         enabled: true
-        domain: 'portal.acme.com'
+        domain: portal.acme.com
         certificate_id: "{{ cert_name.data[0].id }}"
-        user_notification: 'PRA Portal'
+        user_notification: PRA Portal
         user_notification_enabled: true
       register: result

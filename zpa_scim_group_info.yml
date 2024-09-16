@@ -37,9 +37,9 @@
   tasks:
     # Gather all SCIM Group Info
     - name: Gather Details of All SCIM Groups
-      zscaler.zpacloud.zpa_scim_group_info:
-        idp_name: IdP_Name
       register: scim_groups
+      willguibr.zpacloud.zpa_scim_group_info:
+        idp_name: IdP_Name
 
     - name: All SCIM Groups
       ansible.builtin.debug:
@@ -47,10 +47,10 @@
 
     # Gather Specific SCIM Group Info By Name
     - name: Gather Details of a Specific SCIM Group by Name
-      zscaler.zpacloud.zpa_scim_group_info:
+      register: scim_group_name
+      willguibr.zpacloud.zpa_scim_group_info:
         idp_name: IdP_Name
         name: Engineering
-      register: scim_group_name
 
     - name: SCIM Group By Name
       ansible.builtin.debug:
@@ -58,10 +58,10 @@
 
     # Gather Specific SCIM Group Info By ID
     - name: Gather Details of a Specific SCIM Group by ID
-      zscaler.zpacloud.zpa_scim_group_info:
+      register: scim_group_id
+      willguibr.zpacloud.zpa_scim_group_info:
         idp_name: IdP_Name
         id: "293480"
-      register: scim_group_id
 
     - name: SCIM Group By ID
       ansible.builtin.debug:

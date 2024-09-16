@@ -33,29 +33,29 @@
 
   tasks:
     - name: Gather Detail Information of All Segment Groups
-      zscaler.zpacloud.zpa_segment_group_info:
-        provider: "{{ zpa_cloud }}"
       register: segment_groups
+      willguibr.zpacloud.zpa_segment_group_info:
+        provider: "{{ zpa_cloud }}"
 
     - name: All Segment Groups
       ansible.builtin.debug:
         msg: "{{ segment_groups }}"
 
     - name: Gather Details of All Segment Groups by Name
-      zscaler.zpacloud.zpa_segment_group_info:
+      register: segment_group_name
+      willguibr.zpacloud.zpa_segment_group_info:
         provider: "{{ zpa_cloud }}"
         name: Example
-      register: segment_group_name
 
     - name: Segment Groups by Name
       ansible.builtin.debug:
         msg: "{{ segment_group_name }}"
 
     - name: Gather Details of All Segment Groups by ID
-      zscaler.zpacloud.zpa_segment_group_info:
+      register: segment_group_id
+      willguibr.zpacloud.zpa_segment_group_info:
         provider: "{{ zpa_cloud }}"
         id: "216196257331291969"
-      register: segment_group_id
 
     - name: Segment Groups by ID
       ansible.builtin.debug:

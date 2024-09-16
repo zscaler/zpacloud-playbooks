@@ -35,9 +35,9 @@
   tasks:
     # Gather all Saml Attribute Info
     - name: Gather Details of All Saml Attributes
-      zscaler.zpacloud.zpa_saml_attribute_info:
-        provider: "{{ zpa_cloud }}"
       register: saml_attributes
+      willguibr.zpacloud.zpa_saml_attribute_info:
+        provider: "{{ zpa_cloud }}"
 
     - name: All SAML Attributes
       ansible.builtin.debug:
@@ -45,10 +45,10 @@
 
     # Gather Specific Saml Attribute Info By Name
     - name: Gather Details of a Specific Saml Attribute by Name
-      zscaler.zpacloud.zpa_saml_attribute_info:
+      register: saml_attribute_name
+      willguibr.zpacloud.zpa_saml_attribute_info:
         provider: "{{ zpa_cloud }}"
         name: DepartmentName_User_Okta
-      register: saml_attribute_name
 
     - name: Saml Attribute by Name
       ansible.builtin.debug:
@@ -56,10 +56,10 @@
 
     # Gather Specific Saml Attribute Info By ID
     - name: Gather Details of a Specific Saml Attribute by ID
-      zscaler.zpacloud.zpa_saml_attribute_info:
+      register: saml_attribute_id
+      willguibr.zpacloud.zpa_saml_attribute_info:
         provider: "{{ zpa_cloud }}"
         id: "216196257331282583"
-      register: saml_attribute_id
 
     - name: Saml Attribute by ID
       ansible.builtin.debug:

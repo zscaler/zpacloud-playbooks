@@ -33,7 +33,8 @@
 
   tasks:
     - name: Create App Connector Group
-      zscaler.zpacloud.zpa_app_connector_groups:
+      register: app_connector_group_id
+      willguibr.zpacloud.zpa_app_connector_groups:
         provider: "{{ zpa_cloud }}"
         name: App_Connector_Group_One
         description: App_Connector_Group_One
@@ -47,10 +48,14 @@
         upgrade_time_in_secs: "66600"
         override_version_profile: true
         version_profile_id: "0"
-      register: app_connector_group_id
 
     - name: Create a Server Group - Dynamic Discovery Enabled
-      zscaler.zpacloud.zpa_server_group:
+      with_items:
+        - name: Server_Group_One
+          description: Server_Group_One
+          enabled: true
+          dynamic_discovery: true
+      willguibr.zpacloud.zpa_server_group:
         provider: "{{ zpa_cloud }}"
         name: "{{ item.name }}"
         description: "{{ item.description }}"
@@ -58,5 +63,3 @@
         dynamic_discovery: "{{ item.dynamic_discovery }}"
         app_connector_group_ids:
           - "{{ app_connector_group_id.data.id }}"
-      with_items:
-        - { name: Server_Group_One, description: Server_Group_One, enabled: true, dynamic_discovery: true }

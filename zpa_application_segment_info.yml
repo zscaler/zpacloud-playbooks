@@ -33,29 +33,29 @@
 
   tasks:
     - name: Gather Details of All Application Segments
-      zscaler.zpacloud.zpa_application_segment_info:
-        provider: "{{ zpa_cloud }}"
       register: all_app_segments
+      willguibr.zpacloud.zpa_application_segment_info:
+        provider: "{{ zpa_cloud }}"
 
     - name: All App Segment Details
       ansible.builtin.debug:
         msg: "{{ all_app_segments }}"
 
     - name: Gather Details of a Specific Application Segments by Name
-      zscaler.zpacloud.zpa_application_segment_info:
+      register: result_name
+      willguibr.zpacloud.zpa_application_segment_info:
         provider: "{{ zpa_cloud }}"
         name: App_Segment_Name
-      register: result_name
 
     - name: App Segment Details By Name
       ansible.builtin.debug:
         msg: "{{ result_name }}"
 
     - name: Gather Details of a Specific Application Segments by ID
-      zscaler.zpacloud.zpa_application_segment_info:
+      register: app_segment_id
+      willguibr.zpacloud.zpa_application_segment_info:
         provider: "{{ zpa_cloud }}"
         id: "12345678910"
-      register: app_segment_id
 
     - name: App Segment Details By ID
       ansible.builtin.debug:

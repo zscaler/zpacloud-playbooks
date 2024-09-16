@@ -33,7 +33,8 @@
 
   tasks:
     - name: Create App Connector Group
-      zscaler.zpacloud.zpa_app_connector_groups:
+      register: app_connector_group_id
+      willguibr.zpacloud.zpa_app_connector_groups:
         provider: "{{ zpa_cloud }}"
         name: App Connector Group One
         description: App Connector Group One
@@ -47,10 +48,10 @@
         upgrade_time_in_secs: "66600"
         override_version_profile: true
         version_profile_id: "0"
-      register: app_connector_group_id
 
     - name: Create Server Group
-      zscaler.zpacloud.zpa_server_group:
+      register: server_group_id
+      willguibr.zpacloud.zpa_server_group:
         provider: "{{ zpa_cloud }}"
         name: Server Group One
         description: Server Group One
@@ -58,18 +59,37 @@
         dynamic_discovery: true
         app_connector_group_ids:
           - "{{ app_connector_group_id.data.id }}"
-      register: server_group_id
 
     - name: Create Segment Group
-      zscaler.zpacloud.zpa_segment_group:
+      register: segment_group_id
+
+      # Create an Application Segment
+      willguibr.zpacloud.zpa_segment_group:
         provider: "{{ zpa_cloud }}"
         name: Segment Group One
         description: Segment Group One
-      register: segment_group_id
 
-    # Create an Application Segment
     - name: Create an Application Segment
-      zscaler.zpacloud.zpa_application_segment:
+      with_items:
+        - name: app01
+          description: application one
+          domain_names:
+            - app01.example.com
+          enabled: true
+          health_reporting: ON_ACCESS
+          tcp_keep_alive: true
+          is_cname_enabled: true
+          tcp_port_range:
+            - from: "80"
+              to: "80"
+        - name: app02
+          description: application two
+          domain_names:
+            - app02.example.com
+          tcp_port_range:
+            - from: "443"
+              to: "443"
+      willguibr.zpacloud.zpa_application_segment:
         provider: "{{ zpa_cloud }}"
         name: "{{ item.name }}"
         description: "{{ item.description }}"
@@ -83,20 +103,3 @@
         segment_group_id: "{{ segment_group_id.data.id }}"
         server_group_ids:
           - "{{ server_group_id.data.id }}"
-      with_items:
-        - name: app01
-          description: application one
-          domain_names: [app01.example.com]
-          enabled: true
-          health_reporting: ON_ACCESS
-          tcp_keep_alive: true
-          is_cname_enabled: true
-          tcp_port_range:
-            - from: "80"
-              to: "80"
-        - name: app02
-          description: application two
-          domain_names: [app02.example.com]
-          tcp_port_range:
-            - from: "443"
-              to: "443"

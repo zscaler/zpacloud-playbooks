@@ -35,32 +35,32 @@
 
   tasks:
     - name: Gather Details of All Connector Group Provisioning Keys
-      zscaler.zpacloud.zpa_provisioning_key_info:
+      register: all_connector_grp_keys
+      willguibr.zpacloud.zpa_provisioning_key_info:
         provider: "{{ zpa_cloud }}"
         key_type: connector
-      register: all_connector_grp_keys
 
     - name: All Connector Group Provisioning Keys
       ansible.builtin.debug:
         msg: "{{ all_connector_grp_keys }}"
 
     - name: Gather Details of All Connector Group Provisioning Keys by Name
-      zscaler.zpacloud.zpa_provisioning_key_info:
+      register: connector_grp_key_name
+      willguibr.zpacloud.zpa_provisioning_key_info:
         provider: "{{ zpa_cloud }}"
         name: App Connector Group Key
         key_type: connector
-      register: connector_grp_key_name
 
     - name: Connector Group Key By Name
       ansible.builtin.debug:
         msg: "{{ connector_grp_key_name }}"
 
     - name: Gather Details of All Connector Group Provisioning Keys by ID
-      zscaler.zpacloud.zpa_provisioning_key_info:
+      register: connector_grp_key_id
+      willguibr.zpacloud.zpa_provisioning_key_info:
         provider: "{{ zpa_cloud }}"
         id: "8691"
         key_type: connector
-      register: connector_grp_key_id
 
     - name: Connector Group Key By ID
       ansible.builtin.debug:
@@ -73,32 +73,32 @@
 
   tasks:
     - name: Gather Details of All Service Edge Group Provisioning Keys
-      zscaler.zpacloud.zpa_provisioning_key_info:
+      register: all_edge_grp_key_name
+      willguibr.zpacloud.zpa_provisioning_key_info:
         provider: "{{ zpa_cloud }}"
         key_type: service_edge
-      register: all_edge_grp_key_name
 
     - name: All Service Edge Group
       ansible.builtin.debug:
         msg: "{{ all_edge_grp_key_name }}"
 
     - name: Gather Details of All Service Edge Group Provisioning Keys by Name
-      zscaler.zpacloud.zpa_provisioning_key_info:
+      register: edge_grp_key_name
+      willguibr.zpacloud.zpa_provisioning_key_info:
         provider: "{{ zpa_cloud }}"
         name: Example Service Edge Group
         key_type: service_edge
-      register: edge_grp_key_name
 
     - name: Service Edge Group Key By Name
       ansible.builtin.debug:
         msg: "{{ edge_grp_key_name }}"
 
     - name: Gather Details of All Service Edge Group Provisioning Keys by ID
-      zscaler.zpacloud.zpa_provisioning_key_info:
+      register: edge_grp_key_id
+      willguibr.zpacloud.zpa_provisioning_key_info:
         provider: "{{ zpa_cloud }}"
         id: "8691"
         key_type: service_edge
-      register: edge_grp_key_id
 
     - name: Service Edge Group Key By ID
       ansible.builtin.debug:

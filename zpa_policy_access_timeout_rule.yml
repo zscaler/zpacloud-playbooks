@@ -34,26 +34,28 @@
   tasks:
     # Gather Applicaton Segment Info
     - name: Application Segment - Example
-      zscaler.zpacloud.zpa_application_segment_info:
-        provider: "{{ zpa_cloud }}"
-        name: Example
       register: application_segment
 
-    # Get IdP Controller ID Information
+      # Get IdP Controller ID Information
+      willguibr.zpacloud.zpa_application_segment_info:
+        provider: "{{ zpa_cloud }}"
+        name: Example
+
     - name: Get information IdP Controller ID
-      zscaler.zpacloud.zpa_idp_controller_info:
+      register: idp_name
+      willguibr.zpacloud.zpa_idp_controller_info:
         provider: "{{ zpa_cloud }}"
         name: IdP_Name
-      register: idp_name
 
     - name: Get Contractors SCIM Group ID
-      zscaler.zpacloud.zpa_scim_group_info:
+      register: contractors_group
+
+      # Create Policy Timeout Rules
+      willguibr.zpacloud.zpa_scim_group_info:
         provider: "{{ zpa_cloud }}"
         name: Contractors
         idp_name: IdP_Name
-      register: contractors_group
 
-    # Create Policy Timeout Rules
     - name: Timeout Policy - Example
       zscaler.zpacloud.zpa_policy_access_timeout_rule:
         provider: "{{ zpa_cloud }}"
