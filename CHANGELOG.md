@@ -1,5 +1,15 @@
 # Zscaler Private Access (ZPA) Ansible Playbooks
 
+## 1.1.1 (September, 23 2024)
+
+### Notes
+
+- Python Versions: **v3.9, v3.10, v3.11**
+
+### Feature
+
+* - [PR #3](https://github.com/zscaler/zpacloud-playbooks/pull/7) Fixed Service `zpa_service_edge_groups_info` playbook example. 
+
 ## 1.1.0 (September, 3 2024)
 
 ### Notes
